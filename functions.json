@@ -1,0 +1,96 @@
+{
+    "functions": [
+        {
+            "description": "Utility to calculate raf from list of DX codes",
+            "id": "DX_RAF",
+            "name": "DX_RAF",
+            "parameters": [
+                {
+                    "description": "accepts array of dx codes",
+                    "dimensionality": "matrix",
+                    "name": "dx_array",
+                    "type": "string"
+                },
+                {
+                    "name": "age",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "model",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "sex",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "disabl",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "verbose",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "never_trump",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "baserate",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Convert string to list, dedupe, and ensure DX are formatted correctly.",
+            "id": "CLEAN_DX",
+            "name": "CLEAN_DX",
+            "parameters": [
+                {
+                    "description": "accepts array of dx codes",
+                    "dimensionality": "matrix",
+                    "name": "dx_array",
+                    "type": "string"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "clean hcc",
+            "id": "CLEAN_CC",
+            "name": "CLEAN_CC",
+            "parameters": [
+                {
+                    "description": "accepts array of hcc codes",
+                    "dimensionality": "matrix",
+                    "name": "cc_array",
+                    "type": "string"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        }
+    ]
+}
