@@ -104,7 +104,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var default_dxmap, default_hccmap, default_hcccoefn;
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_dxmap.json').then(function (response) {
   return response.json();
-}).tata) {
+}).then(function (data) {
   // Work with JSON data here
   default_dxmap = data;
 })["catch"](function (err) {// Do something for an error here
