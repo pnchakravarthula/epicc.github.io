@@ -1,7 +1,129 @@
 {
     "functions": [
         {
-            "description": "Utility to calculate raf from list of DX codes",
+            "description": "Returns demographic raf value based on age, gender and coding model",
+            "id": "DEMO_RAF",
+            "name": "DEMO_RAF",
+            "parameters": [
+                {
+                    "description": "accepts array",
+                    "dimensionality": "matrix",
+                    "name": "condition_list",
+                    "type": "string"
+                },
+                {
+                    "name": "age",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "sex",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "model",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "orec",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "baserate",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Returns comma-separated list of descriptions of each DX Code from CMS crosswalk.",
+            "id": "DX_DESC",
+            "name": "DX_DESC",
+            "parameters": [
+                {
+                    "description": "accepts array of hcc codes",
+                    "dimensionality": "matrix",
+                    "name": "dx_array",
+                    "type": "string"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "age",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "sex",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "verbose",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Returns a comma separated list of the ccs represented by a list of DX codes after trumping/interaction logic is applied",
+            "id": "DX2CC",
+            "name": "DX2CC",
+            "parameters": [
+                {
+                    "description": "accepts array of dx codes",
+                    "dimensionality": "matrix",
+                    "name": "dx_array",
+                    "type": "string"
+                },
+                {
+                    "name": "age",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "sex",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "disabl",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "never_trump",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "verbose",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Returns cc raf of associated dx codes after conversion to cc and trumping/interaction logic is applied (equivalent of cc_raf(dx2cc(dx_array))",
             "id": "DX_RAF",
             "name": "DX_RAF",
             "parameters": [
@@ -55,7 +177,7 @@
             "result": {}
         },
         {
-            "description": "Convert string to list, dedupe, and ensure DX are formatted correctly.",
+            "description": "Given a list of dx codes, return a list of deduped, normalized and untrumped dx codes valid for the coding model",
             "id": "CLEAN_DX",
             "name": "CLEAN_DX",
             "parameters": [
@@ -74,9 +196,62 @@
             "result": {}
         },
         {
-            "description": "clean hcc",
+            "description": "Given a list of ccs, return a list of deduped, normalized and untrumped ccs codes valid for the coding model",
             "id": "CLEAN_CC",
             "name": "CLEAN_CC",
+            "parameters": [
+                {
+                    "description": "accepts array of hcc codes",
+                    "dimensionality": "matrix",
+                    "name": "cc_array",
+                    "type": "string"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Returns comma-separated list of descriptions of each HCC Code from CMS crosswalk.",
+            "id": "CC_DESC",
+            "name": "CC_DESC",
+            "parameters": [
+                {
+                    "description": "accepts array of hcc codes",
+                    "dimensionality": "matrix",
+                    "name": "cc_array",
+                    "type": "string"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "age",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "sex",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "verbose",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Returns cc raf (does not include demographic RAF) of cc codes after trumping/interaction logic is applied",
+            "id": "CC_RAF",
+            "name": "CC_RAF",
             "parameters": [
                 {
                     "description": "accepts array of hcc codes",

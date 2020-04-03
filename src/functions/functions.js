@@ -1,37 +1,23 @@
 ﻿var default_dxmap, default_hccmap, default_hcccoefn;
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_dxmap.json')
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    // Work with JSON data here
-    default_dxmap = data;
-  })
-  .catch(err => {
-    // Do something for an error here
-  });
-fetch('https://pnchakravarthula.github.io/epicc.github.io//dist/load_hccmap.json')
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    // Work with JSON data here
-    default_hccmap = data;
-  })
-  .catch(err => {
-    // Do something for an error here
-  });
-fetch('https://pnchakravarthula.github.io/epicc.github.io//dist/load_hcccoefn.json')
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    // Work with JSON data here
-    default_hcccoefn = data;
-  })
-  .catch(err => {
-    // Do something for an error here
-  });
+.then(response => response.json())
+.then(data => {
+   default_dxmap = data;
+})
+.catch(error => console.error(error));
+fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_hccmap.json')
+.then(response => response.json())
+.then(data => {
+   default_hccmap = data;
+})
+.catch(error => console.error(error));
+fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_hcccoefn.json')
+.then(response => response.json())
+.then(data => {
+   default_hcccoefn = data;
+})
+.catch(error => console.error(error));
+
 var default_ver = 'v23';
 var default_model = 'CNA'; 
 var default_baserate = 868.0;
@@ -40,7 +26,73 @@ var default_never_trump = 0;
 var interactions = {'v22': v22_interactions, 'v23': v23_interactions, 'v24': v24_interactions};
 
 /**
- * Utility to calculate raf from list of DX codes
+ * Returns demographic raf value based on age, gender and coding model
+ * @customfunction
+ * @param {string[][]} condition_list accepts array
+ */
+function demo_raf(condition_list, age = 65, sex = 'M', model = '', orec = '0', ver = '', baserate = 0.0) {
+  for (var i = 0; i < condition_list.length; i++) {
+    for (var j = 0; j < condition_list[i].length; j++) {
+      condition_list = condition_list;
+    }
+  }
+  var temp_condition_list = condition_list.toString();
+  temp_condition_list = temp_condition_list.split(",");
+  for (i = 0; i < temp_condition_list.length; i++) {
+    temp_condition_list[i] = temp_condition_list[i].toString().trim();
+  }
+  var raf_value =  member(condition_list, age = 65, sex = 'M', model = '', orec = '0', ver = '', baserate = 0.0);
+  raf_value = raf_value['raf']['demo_score'];
+  return raf_value.toString();
+}
+
+/**
+ * Returns comma-separated list of descriptions of each DX Code from CMS crosswalk.
+ * @customfunction
+ * @param {string[][]} dx_array accepts array of hcc codes
+ */
+function dx_desc(dx_array, ver = '', age = 0, sex = '', verbose = true) {
+  for (i = 0; i < dx_array.length; i++) {
+      for (j = 0; j < dx_array[i].length; j++) {
+        dx_array = dx_array;
+      }
+  }
+  var temp_dx_array = dx_array.toString();
+  temp_dx_array = temp_dx_array.split(",");
+  for (i = 0; i < temp_dx_array.length; i++) {
+    temp_dx_array[i] = temp_dx_array[i].toString().trim();
+  }
+  var hcc_dict = dx_hccs(temp_dx_array, ver = '', age = 0, sex = '', verbose = true);
+  var hcc_cust_list = [];
+  for (var [key, value] of Object.entries(hcc_dict)) {
+    var val = key + ":" + value["desc"];
+    hcc_cust_list.push(val);
+  }
+  return hcc_cust_list.toString();
+}
+
+/**
+ * Returns a comma separated list of the ccs represented by a list of DX codes after trumping/interaction logic is applied
+ * @customfunction
+ * @param {string[][]} dx_array accepts array of dx codes
+ */
+function dx2cc(dx_array, age = 0, ver = '', sex = '', disabl = false, never_trump = 0, verbose = false) {
+  for (var i = 0; i < dx_array.length; i++) {
+    for (var j = 0; j < dx_array[i].length; j++) {
+      dx_array = dx_array;
+    }
+  }
+  var temp_dx_array = dx_array.toString();
+  temp_dx_array = temp_dx_array.split(",");
+  for (i = 0; i < temp_dx_array.length; i++) {
+    temp_dx_array[i] = temp_dx_array[i].toString().trim();
+  }
+  var unique_hccs = dx2hcc(temp_dx_array, age = 0, ver = '', sex = '', disabl = false, never_trump = 0, verbose = false);
+  return unique_hccs.toString();
+}
+
+/**
+ * Returns cc raf of associated dx codes after conversion to cc and trumping/interaction logic is applied (equivalent of cc_raf(dx2cc(dx_array))
  * @customfunction
  * @param {string[][]} dx_array accepts array of dx codes
  */
@@ -48,33 +100,37 @@ function dx_raf(dx_array, age = 0, ver = '', model = '', sex = '', disabl = fals
   /*
   Utility to calculate raf from list of DX codes
   */
-  for (i = 0; i < dx_array.length; i++) {
-    for (j = 0; j < dx_array[i].length; j++) {
+  for (var i = 0; i < dx_array.length; i++) {
+    for (var j = 0; j < dx_array[i].length; j++) {
       dx_array = dx_array;
     }
   }
   var temp_dx_array = dx_array.toString();
   temp_dx_array = temp_dx_array.split(",");
-
+  for (i = 0; i < temp_dx_array.length; i++) {
+    temp_dx_array[i] = temp_dx_array[i].toString().trim();
+  }
   var raf_value = dx2raf(temp_dx_array, age, ver, model, sex, disabl, verbose, never_trump, baserate);
   return raf_value.toString();
 }
 
 /**
- * Convert string to list, dedupe, and ensure DX are formatted correctly.
+ * Given a list of dx codes, return a list of deduped, normalized and untrumped dx codes valid for the coding model
  * @customfunction
  * @param {string[][]} dx_array accepts array of dx codes
  */
 function clean_dx(dx_array, ver = '') {
   // Convert string to list, dedupe, and ensure DX are formatted correctly.
-  for (i = 0; i < dx_array.length; i++) {
-    for (j = 0; j < dx_array[i].length; j++) {
+  for (var i = 0; i < dx_array.length; i++) {
+    for (var j = 0; j < dx_array[i].length; j++) {
       dx_array = dx_array;
     }
   }
   var temp_dx_array = dx_array.toString();
   temp_dx_array = temp_dx_array.split(",");
-
+  for (i = 0; i < temp_dx_array.length; i++) {
+    temp_dx_array[i] = temp_dx_array[i].toString().trim();
+  }
   var dx_values = clean_dxlist(temp_dx_array, ver);
   var dx_set_values = [];
   dx_values.forEach(v => dx_set_values.push(v));
@@ -82,11 +138,31 @@ function clean_dx(dx_array, ver = '') {
 }
 
 /**
- * clean hcc
+ * Given a list of ccs, return a list of deduped, normalized and untrumped ccs codes valid for the coding model
  * @customfunction
  * @param {string[][]} cc_array accepts array of hcc codes
  */
 function clean_cc(cc_array, ver = '') {
+  for (var i = 0; i < cc_array.length; i++) {
+      for (var j = 0; j < cc_array[i].length; j++) {
+        cc_array = cc_array;
+      }
+  }
+  var temp_cc_array = cc_array.toString();
+  temp_cc_array = temp_cc_array.split(",");
+  for (i = 0; i < temp_cc_array.length; i++) {
+    temp_cc_array[i] = temp_cc_array[i].toString().trim();
+  }
+  var hcc_values = clean_hcclist(temp_cc_array, ver = '');
+  return hcc_values.toString();
+}
+
+/**
+ * Returns comma-separated list of descriptions of each HCC Code from CMS crosswalk.
+ * @customfunction
+ * @param {string[][]} cc_array accepts array of hcc codes
+ */
+function cc_desc(cc_array, ver = '', age = 0, sex = '', verbose = false) {
   for (i = 0; i < cc_array.length; i++) {
       for (j = 0; j < cc_array[i].length; j++) {
         cc_array = cc_array;
@@ -94,12 +170,169 @@ function clean_cc(cc_array, ver = '') {
   }
   var temp_cc_array = cc_array.toString();
   temp_cc_array = temp_cc_array.split(",");
-
-  var hcc_values = clean_hcclist(temp_cc_array, ver = '');
-  hcc_values = hcc_values.toString();
-  return hcc_values;
+  for (i = 0; i < temp_cc_array.length; i++) {
+    temp_cc_array[i] = temp_cc_array[i].toString().trim();
+  }
+  var hcc_dict = hcc_dct(temp_cc_array, ver = '', age = 0, sex = '', verbose = false);
+  var hcc_cust_list = [];
+  for (var [key, value] of Object.entries(hcc_dict)) {
+    var val = key + ":" + value["desc"];
+    hcc_cust_list.push(val);
+  }
+  return hcc_cust_list.toString();
 }
 
+// /**
+//  * cc_info
+//  * @customfunction
+//  * @param {string[][]} cc_array accepts array of hcc codes
+//  */
+// function cc_info(cc_array, ver = '') {
+//   ver = ver || default_ver;
+
+//   for (i = 0; i < cc_array.length; i++) {
+//       for (j = 0; j < cc_array[i].length; j++) {
+//         cc_array = cc_array;
+//       }
+//   }
+//   var temp_cc_array = cc_array.toString();
+//   temp_cc_array = temp_cc_array.split(",");
+//   temp_cc_array.map(Function.prototype.call, String.prototype.trim);
+
+//   var hccmap = default_hccmap[ver];
+//   var output = [];
+//   for (var i = 0; i < temp_cc_array.length; i++) {
+//     var tem_hccmap = hccmap[temp_cc_array[i]]
+//     var raf_value = hcc2raf(temp_cc_array[i], ver = '');
+//   }  
+//   return output.toString();
+// }
+
+/**
+ * Returns cc raf (does not include demographic RAF) of cc codes after trumping/interaction logic is applied
+ * @customfunction
+ * @param {string[][]} cc_array accepts array of hcc codes
+ */
+function cc_raf(cc_array, ver = '') {
+  for (i = 0; i < cc_array.length; i++) {
+      for (j = 0; j < cc_array[i].length; j++) {
+        cc_array = cc_array;
+      }
+  }
+  var temp_cc_array = cc_array.toString();
+  temp_cc_array = temp_cc_array.split(",");
+  for (i = 0; i < temp_cc_array.length; i++) {
+    temp_cc_array[i] = temp_cc_array[i].toString().trim();
+  }
+  var raf_value = hcc2raf(temp_cc_array, ver = '');
+  return raf_value.toString();
+}
+
+// /**
+//  * cc_combine
+//  * @customfunction
+//  * @param {string[][]} cc_array accepts array of hcc codes
+//  */
+// function cc_combine(cc_array, ver = '', age = 0, disabl = false, never_trump = 0) {
+//   for (i = 0; i < cc_array.length; i++) {
+//       for (j = 0; j < cc_array[i].length; j++) {
+//         cc_array = cc_array;
+//       }
+//   }
+//   var temp_cc_array = cc_array.toString();
+//   temp_cc_array = temp_cc_array.split(",");
+//   temp_cc_array.map(Function.prototype.call, String.prototype.trim);
+
+//   var hccs = prep_hccs(temp_cc_array, ver = '', age = 0, disabl = false, never_trump = 0);
+//   return hccs.toString();
+// }
+
+
+// /**
+//  * cc_increment
+//  * @customfunction
+//  * @param {string[][]} old_list accepts array of hcc codes
+//  * @param {string[][]} new_list accepts array of hcc codes
+//  */
+// function cc_increment(old_list = [], new_list = [], ver = '', model = '', age = 0, disabl = false, never_trump = 0, baserate = 0.0) {
+//   for (i = 0; i < old_list.length; i++) {
+//       for (j = 0; j < old_list[i].length; j++) {
+//         old_list = old_list;
+//       }
+//   }
+//   var temp_old_list = old_list.toString();
+//   temp_old_list = temp_old_list.split(",");
+//   temp_old_list.map(Function.prototype.call, String.prototype.trim);
+
+//   for (i = 0; i < new_list.length; i++) {
+//     for (j = 0; j < new_list[i].length; j++) {
+//       new_list = new_list;
+//     }
+// }
+// var temp_new_list = new_list.toString();
+// temp_new_list = temp_new_list.split(",");
+// temp_new_list.map(Function.prototype.call, String.prototype.trim);
+
+// var hcc_dict = hcc_increment(temp_old_list, temp_new_list, ver = '', model = '', age = 0, disabl = false, never_trump = 0, baserate = 0.0);
+//   // var hcc_cust_list = [];
+//   // for (var [key, value] of Object.entries(hcc_dict)) {
+//   //   var val = key + ":" + value["desc"];
+//   //   hcc_cust_list.push(val);
+//   // }
+//   return hcc_cust_list.toString();
+// }
+
+// /**
+//  * cc_gaps
+//  * @customfunction
+//  * @param {string[][]} cc_array accepts array of hcc codes
+//  */
+// function cc_gaps(cc_array, hcc_array) 
+// {
+//     for (i = 0; i < cc_array.length; i++) {
+//         for (j = 0; j < cc_array[i].length; j++) {
+//           cc_array = cc_array;
+//         }
+//     }
+//     for (i = 0; i < hcc_array.length; i++) {
+//         for (j = 0; j < hcc_array[i].length; j++) {
+//             hcc_array = hcc_array;
+//         }
+//     }
+//     var temp_cc_array = cc_array.toString();
+//     temp_cc_array = temp_cc_array.split(",");
+//     var temp_hcc_array = hcc_array.toString();
+//     temp_hcc_array = hcc_array.split(",");
+  
+//     var hcc_values = hcc_gaps(temp_cc_array, temp_hcc_array);
+//     var hcc_cust_list = [];
+//     for (var [key, value] of Object.entries(hcc_values)) {
+//       if ("Deletes" in hcc_values || "Downgraded" in hcc_values) {
+//         for (i = 0; i < value.length; i++) {
+//           hcc_cust_list[i] = value[i];
+//         }
+//       }
+//     }
+//     return hcc_cust_list.toString();
+//   }
+   
+ function hcc_gaps(old_list = [], new_list = [], ver = '', model = '', age = 0, disabl = false, baserate = 0.0) {
+    /*
+    Utility to identify hccs that were dropped or downgraded from one list to the next
+    */
+
+    ver = ver.toLowerCase() || default_ver;
+    model = model.toUpperCase() || default_model;
+    baserate = baserate || default_baserate;
+
+    let new_hccs = prep_hccs(new_list, ver = ver, age = age, disabl = disabl);
+    let old_hccs = prep_hccs(old_list, ver = ver, age = age, disabl = disabl);
+
+    let diff = hcc_diff(old_hccs, new_hccs, ver = ver, model = model, disabl = disabl, baserate = baserate);
+    let raf = - hcc2raf(diff['deletes']) - hcc2raf(diff['downgraded']) + hcc2raf(diff['downgrade_to']);
+    let gaps = { "Deletes": diff["deletes"], "Downgraded": diff["downgraded"], "raf": raf, "premium": Math.round(raf * baserate, 2) };
+    return gaps;
+}
 
 function dx2raf(dx_list, age = 0, ver = '', model = '', sex = '', disabl = false, verbose = false, never_trump = 0, baserate = 0.0) {
   /*
@@ -327,6 +560,308 @@ function clean_hcclist(hcc_list, ver = '') {
   return Array.from(hcc_set);
 }
 
+function hcc2raf(hcc_list, ver = '', model = '', disabl = false, age = 0, never_trump = 0, baserate = 0.0) {
+  /*
+  Utility for calculating hcc raf for a list of hccs
+  */
+  ver = ver || default_ver;
+  model = model || default_model;
+  baserate = baserate || default_baserate;
+  never_trump = never_trump || default_never_trump;
+  hcc_list = prep_hccs(hcc_list, ver = ver, age = age, disabl = disabl, never_trump = 0);
+  var raf = get_raf([], hcc_list, ver = ver, model = model, baserate = baserate);
+  return raf["hcc_score"];
+}
+
+function prep_hccs(hcc_list, ver = '', age = 0, disabl = false, never_trump = 0) {
+  /*
+  Utility for prepping an HCC list, applying Trumping and Interactions; does not include age/sex interactions
+  as they at the DX level
+  */
+  ver = ver || default_ver;
+  never_trump = never_trump || default_never_trump;
+  var hccs = trump_hccs(hcc_list, ver = ver, never_trump = never_trump);
+  hccs = interactions[ver](hccs, disabl, age);
+  return hccs;
+}
+
+function trump_hccs(hcc_list, ver = '', never_trump = 0) {
+  // Given a list of HCCs and an HCC version, returns a list of HCCs after trumping
+  ver = ver || default_ver;
+  never_trump = never_trump || default_never_trump;
+  var hccmap = default_hccmap[ver];
+
+  // Make sure we're getting the right format
+  hcc_list_temp = clean_hcclist(hcc_list, ver = ver);
+  if (never_trump == 0) {
+      var hcc_set = new Set(hcc_list_temp);
+      var trumped_set = new Set();
+      for (var hcc of hcc_set) {
+          if (hcc in hccmap) {
+              for (var child of hccmap[hcc]['children']) {
+                  trumped_set.add(child);
+              }
+          }
+      }
+      hcc_set = new Set([...hcc_set].filter(x => !trumped_set.has(x)))
+      hcc_list = Array.from(hcc_set);
+  }
+
+  var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+  hcc_list_temp.sort(collator.compare);
+  return hcc_list_temp;
+}
+
+function hcc_dct(hcc_list, ver = '', age = 0, sex = '', verbose = false) {
+  ver = ver || default_ver;
+  verbose = verbose || default_verbose;
+
+  var hccmap = default_hccmap[ver];
+  var unique_hccs = new Set();
+  for (var hcc of hcc_list) {
+      if (hcc in hccmap) {
+          unique_hccs.add(hcc);
+      }
+  }
+
+  var got_trumped = {};
+  for (var hcc of unique_hccs) {
+      for (var child of hccmap[hcc]['children']) {
+          got_trumped[child] = hcc;
+      }
+  }
+  var hcc_dct = {};
+
+  for (var hcc of unique_hccs) {
+      if (hccmap.hasOwnProperty(hcc)) {
+          hcc_dct[hcc] = JSON.parse(JSON.stringify(hccmap[hcc]))  // Get details for this hcc Code
+          delete hcc_dct[hcc]['parents'];
+          delete hcc_dct[hcc]['children'];
+      } else if (verbose) {
+          hcc_dct[hcc] = { "desc": "", "parents": {} };
+      }
+
+  }
+
+  for (var hcc in hcc_dct) {
+      for (var trumped_hcc in got_trumped) {
+          if (trumped_hcc == hcc) {  // If we find trumped HCC, replace with note of its demise
+              hcc_dct[hcc]['trumped by'] = got_trumped[trumped_hcc];
+          }
+      }
+  }
+
+  return hcc_dct;
+}
+
+function hcc_increment(old_list, new_list, ver = '', model = '', age = 0, disabl = false, never_trump = 0, baserate = 0.0) {
+  // Utility to identify the incremental HCCs and value of adding a new list HCCs to a base list of HCCs
+  ver = ver|| default_ver;
+  model = model || default_model
+  baserate = baserate || default_baserate
+  never_trump = never_trump || default_never_trump
+  age = age || 0;
+  disabl = disabl || false;
+  var new_hccs = prep_hccs(new_list, ver = ver, age = age, disabl = disabl, never_trump = never_trump)
+  var old_hccs = prep_hccs(old_list, ver = ver, age = age, disabl = disabl)
+  new_hccs = new_hccs + ','.concat(old_hccs)
+  var final_hccs = prep_hccs(new_hccs, ver = ver, age = age, disabl = disabl, never_trump = never_trump)
+  var diff = hcc_diff(old_hccs, final_hccs, ver = ver, model = model, disabl = disabl, baserate = baserate, never_trump = never_trump)
+  diff["final_hccs"] = final_hccs;
+  delete diff['downgraded'];
+  delete diff['downgrade_to'];
+  delete diff['deletes'];
+  return diff.final_hccs;
+}
+
+function hcc_diff(old_list = [], new_list = [], ver = '', age = 0, sex = '', model = '', disabl = false, never_trump = 0, baserate = 0.0) {
+  /*
+  Calculate the changes between two hcc lists, {"adds":[], "upgraded":[] "downgraded":[], "deletes":[]}
+  - "adds" are new HCC Codes (includes upgrades of other codes),
+  - "upgraded" are codes from base that are no longer relevant due to new codes
+  - "downgraded" are codes from base that are present at a lower specificity in new
+  - "deletes" are codes from base that are no longer present at all
+  */
+
+  ver = ver || default_ver;
+  model = model || default_model;
+  baserate = baserate || default_baserate;
+  never_trump = never_trump || default_never_trump;
+
+  let hccmap = default_hccmap[ver];
+  // Prep cleans and trumps the list and add interactions
+  let old_set = new Set(prep_hccs(old_list, ver = ver, age = age, disabl = disabl));
+  let new_set = new Set(prep_hccs(new_list, ver = ver, age = age, disabl = disabl, never_trump = never_trump));
+
+  // Find the full set of codes that each set can trump
+  let old_children = new Set();
+  let new_children = new Set();
+  let new_parents = new Set();
+  for (let hcc of old_set) {
+      if (hcc in hccmap) {
+          for (let child of hccmap[hcc]['children']) {
+              old_children.add(child)
+          }
+      }
+  }
+  for (let hcc of new_set) {
+      if (hcc in hccmap) {
+          for (let child of hccmap[hcc]['children']) {
+              old_children.add(child)
+          }
+      }
+  }
+  for (let hcc of new_set) {
+      if (hcc in hccmap) {
+          for (let child of hccmap[hcc]['children']) {
+              old_children.add(child)
+          }
+      }
+  }
+
+  // New HCCs, except where they are trumped by old HCCs (downgrades)
+  let new_hccs_temp = new Set([...new_set].filter(x => !old_set.has(x)));
+  let new_hccs = new Set([...new_hccs_temp].filter(x => !old_children.has(x)));
+  let downgraded_temp = new Set([...old_set].filter(x => !new_set.has(x)));
+  let downgraded = new Set([...downgraded_temp].filter(x => new_parents.has(x)));
+  let downgrade_to_temp = new Set([...new_set].filter(x => !old_set.has(x)));
+  let downgrade_to = new Set([...downgrade_to_temp].filter(x => old_children.has(x)));
+  //new_hccs = new_set.difference(old_set).difference(old_children)
+  //downgraded = old_set.difference(new_set).intersection(new_parents)
+  //downgrade_to = new_set.difference(old_set).intersection(old_children)
+  let upgraded = new Set();
+  if (never_trump === 1) {
+      let prep_hccs_set = new Set(prep_hccs(Array.from(new_set)));
+      let upgraded_temp = new Set([...old_set].filter(x => !prep_hccs_set.has(x)));
+      let upgraded = ([...upgraded_temp].filter(x => new_children.has(x)));
+      //old_set.difference(set(this.prep_hccs(list(new_set)))).intersection(new_children)
+  } else {
+      let upgraded_temp = new Set([...old_set].filter(x => !new_set.has(x)));
+      let upgraded = ([...upgraded_temp].filter(x => new_children.has(x)));
+      //upgraded = old_set.difference(new_set).intersection(new_children)
+  }
+
+  let del_hccs_temp = new Set([...old_set].filter(x => !new_set.has(x)));
+  let del_hccs_union = new Set([...upgraded, ...downgraded]);
+  let del_hccs = new Set([...del_hccs_temp].filter(x => !del_hccs_union.has(x)));
+  //del_hccs = old_set.difference(new_set).difference(upgraded.union(downgraded))
+
+  let old_raf = hcc2raf(Array.from(old_set), ver = ver, model = model, baserate = baserate, never_trump = never_trump);
+  let new_raf = hcc2raf(Array.from(new_set), ver = ver, model = model, baserate = baserate, never_trump = never_trump);
+  let delta_raf = new_raf - old_raf;
+
+  let diff = {
+      "adds": Array.from(new_hccs),
+      "upgraded": Array.from(upgraded),
+      "downgraded": Array.from(downgraded),
+      "downgrade_to": Array.from(downgrade_to),
+      "deletes": Array.from(del_hccs),
+      "raf": delta_raf,
+      "premium": Math.round(delta_raf * baserate, 2)
+  }
+  return diff;
+}
+
+function member(condition_list, age = 65, sex = 'M', model = '', orec = '0', ver = '', baserate = 0.0) {
+  /*
+      Builds an HCC risk score for a Medicare Advantage member given demographic and disease factors
+      :param dx_list: list of str
+                      List of DX codes; case and decimal insensitive
+      :param age: float
+                  Age of member
+      :param sex: str
+                  Gender of Member: Accepts "M"/"F", "Male"/"Female" or CMS numerical codes 1/2
+      :param model: str
+                  HCC Model to be used for member. Accepts:
+                      "CNA": Community - Non-dual aged
+                      "CND": Community - Non-dual disabled
+                      "CFA": Community - Full Benefit dual aged
+                      "CFD": Community - Full Benefit dual disabled
+                      "CPA": Community - Partial Benefit dual aged
+                      "CPD": Community - Partial Benefit dual disabled
+                      "INS": Institutional
+                      "NE": New enrollee
+                      "SNPNE": C-SNP new enrolee
+      :param orec: str
+                  Original Reason for Entitlement:
+                      "0": Old age (OASI)
+                      "1": Disability (DIB)
+                      "2": End Stage Renal Disease (ESRD)
+                      "3": Both DIB and ESRD
+
+      :param ver: str
+                  Version of HCC Model to be used (overrides default version set in Ccalc).
+                  Accepts {'v22', 'v23', 'v24'}
+      :return: dict
+              Map of factors and risk scores for member
+  */
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
+  baserate = baserate || default_baserate;
+
+  // Get age/sex/disability demographic codes
+  var disabl = model.endsWith("D");
+  var demo_codes = agesex(age, sex, orec, model);
+  var cond_dict = condition_resolver(condition_list, ver = ver);
+  var condition = cond_dict['condition'];
+  var allhcc = cond_dict['allhcc'];
+  var verbose = default_verbose;
+  var flag;
+  var raf;
+  var dx_dct;
+
+  if (allhcc == 1) {
+      var dx_dct = hcc_dct(condition, ver = ver, age = age, sex = sex, verbose = verbose);
+      unique_hccs = prep_hccs(condition, ver = ver, age = age);
+      unique_hccs = interactions[ver](unique_hccs, disabl, age);
+      raf = get_raf(demo_codes, unique_hccs, ver = ver, model = model, baserate = baserate);
+      flag = 'hcc';
+  } else {
+      // process DX list
+      dx_dct = dx_hccs(condition, ver = ver, age = age, sex = sex, verbose = this.verbose);
+      var unique_hccs = dxdct_hccs(dx_dct);
+      unique_hccs = interactions[ver](unique_hccs, disabl, age);
+      raf = get_raf(demo_codes, unique_hccs, ver = ver, model = model, baserate = baserate);
+      flag = 'dx';
+  }
+
+  return {
+      "hcc_model": { "version": ver, "model": model },
+      "demo": { "age": age, "sex": sex, "orec": orec },
+      "raf": raf,
+      'flag': flag,
+      "dx_hccs": dx_dct
+  }
+}
+
+function condition_resolver(conditionlist, ver = '', never_trump = 0, allhcc = 0) {
+  //need factoring
+  ver = ver || default_ver;
+  never_trump = never_trump || default_never_trump;
+  var list_hcc = [];
+  for (item in conditionlist) {
+    if (Number.isInteger(item) || item.startsWith('HCC')){
+      list_hcc.push(item);
+    }
+  }
+  // list_hcc = conditionlist.filter(item => Number.isInteger(item) || item.startsWith('HCC'));
+  var list_dx = [];
+  var list_dx_clean = [];
+  var dct = new Set();
+  if ((list_hcc.length > 0) || allhcc) {
+      allhcc = 1;
+      list_dx = conditionlist.filter(item => !(list_hcc.includes(item)));
+      list_dx_clean = clean_dxlist(list_dx, ver);
+      var hccs = dx2hcc(list_dx_clean, ver = ver, never_trump = never_trump);
+      var combined_hccs = list_hcc.concat(hccs);
+      dct = { 'allhcc': allhcc, 'condition': combined_hccs };
+
+  } else {
+      list_dx = conditionlist;
+      dct = { 'allhcc': allhcc, 'condition': list_dx };
+  }
+  return dct;
+}
 
 function agesex_edits(dx_dct, age, sex) {
   /*
@@ -531,6 +1066,107 @@ function get_raf(demo_lst, hcc_lst, ver = '', model = '', verbose = true, basera
       "hcc_detail": hcc_detail
   };
   return raf_dct;
+}
+
+function agesex(age, sex, orec, model) {
+  /*
+      Create demographic variables used in regressions, from CMS SAS macro AGESEXV2
+      Valid for V22, V23, V24
+      :param age: float
+                  Age of beneficiary
+      :param sex: str
+                  Gender of beneficiary
+      :param orec: str
+                  Original reason for enrollment
+      :param model: str
+                  Code for CMS model (str)
+      :return: list of str
+              list of demographic str for looking up demo coefficients
+  */
+  let age_maps = {
+      "STD": ["0_34", "35_44", "45_54", "55_59", "60_64", "65_69", "70_74", "75_79",
+          "80_84", "85_89", "90_94", "95_GT"],
+      "NE": ["0_34", "35_44", "45_54", "55_59", "60_64", "65", "66", "67", "68", "69", "70_74", "75_79",
+          "80_84", "85_89", "90_94", "95_GT"]
+  };
+
+  age = Math.trunc(age);  // In case float is passed and someone at upper age bound
+
+  let demo_str;
+  let male_sex = ["M", "MALE", "1"];
+  if (male_sex.includes(sex.toUpperCase())) {
+      demo_str = 'M';
+  } else {
+      demo_str = "F";
+  }
+
+  // Directly from CMS AGESEXV2
+  let disabl = (age < 65) && (orec != "0");
+  let origds = (orec == "1") && !(disabl);
+  let medicaid;
+  let medicaid_condition = ["CP", "CF"];
+  if (medicaid_condition.includes(model)) {
+      medicaid = true;
+  } else {
+      medicaid = false;
+  }
+  let new_enrolee = model.endsWith("NE");
+  let age_labels = [];
+  if (new_enrolee) {
+      age_labels = age_maps["NE"];
+  } else {
+      age_labels = age_maps["STD"];
+  }
+
+  // Derive the lower bound & upper bound of each age band from ordered list of age labels
+  let age_lower_bounds = [];
+  let age_upper_bounds = [];
+  for (let i in age_labels) {
+      let split = age_labels[i].split("_");
+      age_lower_bounds.push(split[0]);
+      age_upper_bounds.push(split[1]);
+  }
+
+  for (const [i, lower_bound] of age_lower_bounds.entries()) {
+      if (i == age_lower_bounds[age_lower_bounds.length] - 1) {
+          demo_str += age_labels[i];
+          break;
+      }
+      if ((lower_bound >= age) && (lower_bound < age_lower_bounds[i + 1])) {
+          demo_str += age_labels[i];
+          break;
+      }
+  }
+
+  if (model.endsWith("NE")) {
+      if (medicaid) {
+          let mcaid_flag = "";
+      } else {
+          mcaid_flag = "N";
+      }
+      if (origds) {
+          let origds_flag = "";
+      } else {
+          origds_flag = "N";
+      }
+      demo_str = mcaid_flag + "MCAID_" + origds_flag + "ORIGDIS_NE" + demo_str;
+  }
+
+  let demo_lst = [model + "_" + demo_str];
+  let model_type = ["CNA", "CFA", "CPA"];
+  let ds_str;
+  let sex_type;
+
+  if ((model_type.includes(model)) && origds) {
+      if (sex === "M") {
+          sex_type = "Male";
+      } else {
+          sex_type = "Female";
+      }
+      ds_str = model + "_OriginallyDisabled_" + sex_type;
+      demo_lst.push(ds_str);
+  }
+  return demo_lst;
 }
 
 function v22_interactions(ccs, disabl, age = '') {
