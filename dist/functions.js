@@ -109,27 +109,21 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var default_dxmap, default_hccmap, default_hcccoefn;
+var default_dxmap, default_hccmap, default_hcccoefn, dummy;
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_dxmap.json').then(function (response) {
   return response.json();
 }).then(function (data) {
   default_dxmap = data;
-})["catch"](function (error) {
-  return console.error(error);
 });
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_hccmap.json').then(function (response) {
   return response.json();
 }).then(function (data) {
   default_hccmap = data;
-})["catch"](function (error) {
-  return console.error(error);
 });
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_hcccoefn.json').then(function (response) {
   return response.json();
 }).then(function (data) {
   default_hcccoefn = data;
-})["catch"](function (error) {
-  return console.error(error);
 });
 var default_ver = 'v23';
 var default_model = 'CNA';
@@ -747,9 +741,9 @@ function dx_hccs(dx_list) {
 
       for (var trumped_hcc in got_trumped) {
         if (got_trumped.hasOwnProperty(trumped_hcc)) {
-          if (got_trumped[trumped_hcc] in dx_dct[dx]['hccs']) {
+          if (trumped_hcc in dx_dct[dx]['hccs']) {
             // If we find trumped HCC, replace with note of its demise
-            dx_dct[dx]['hccs'][got_trumped[trumped_hcc]]['trumped by'] = got_trumped[got_trumped[trumped_hcc]];
+            dx_dct[dx]['hccs'][trumped_hcc]['trumped by'] = got_trumped[trumped_hcc];
           }
         }
       }

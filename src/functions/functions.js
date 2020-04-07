@@ -1,22 +1,19 @@
-﻿var default_dxmap, default_hccmap, default_hcccoefn;
+﻿var default_dxmap, default_hccmap, default_hcccoefn, dummy;
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_dxmap.json')
 .then(response => response.json())
 .then(data => {
-   default_dxmap = data;
-})
-.catch(error => console.error(error));
+  default_dxmap = data;
+});
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_hccmap.json')
 .then(response => response.json())
 .then(data => {
-   default_hccmap = data;
-})
-.catch(error => console.error(error));
+  default_hccmap = data;
+});
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_hcccoefn.json')
 .then(response => response.json())
 .then(data => {
-   default_hcccoefn = data;
-})
-.catch(error => console.error(error));
+  default_hcccoefn = data;
+});
 
 var default_ver = 'v23';
 var default_model = 'CNA'; 
@@ -455,8 +452,8 @@ function dx_hccs(dx_list, ver = '', age = 0, sex = '', verbose = true) {
           dx_dct[dx]['hccs'] = temp_c;
           for (var trumped_hcc in got_trumped) {
               if (got_trumped.hasOwnProperty(trumped_hcc)) {
-                  if (got_trumped[trumped_hcc] in dx_dct[dx]['hccs']) { // If we find trumped HCC, replace with note of its demise
-                      dx_dct[dx]['hccs'][got_trumped[trumped_hcc]]['trumped by'] = got_trumped[got_trumped[trumped_hcc]];
+                  if (trumped_hcc in dx_dct[dx]['hccs']) { // If we find trumped HCC, replace with note of its demise
+                      dx_dct[dx]['hccs'][trumped_hcc]['trumped by'] = got_trumped[trumped_hcc];
                   }
               }
           }
