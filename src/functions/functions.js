@@ -63,7 +63,7 @@ function dx_desc(dx_array, ver = '', age = 0, sex = '', verbose = true) {
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   verbose = verbose || default_verbose;
   
   var hcc_dict = dx_hccs(temp_dx_array, ver, age, sex, verbose);
@@ -91,7 +91,7 @@ function dx2cc(dx_array, age = 0, ver = '', sex = '', disabl = false, never_trum
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   never_trump = never_trump || default_never_trump;
   var unique_hccs = dx2hcc(temp_dx_array, age, ver, sex, disabl, never_trump, verboses);
   return unique_hccs.toString();
@@ -116,8 +116,8 @@ function dx_raf(dx_array, age = 0, ver = '', model = '', sex = '', disabl = fals
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var raf_value = dx2raf(temp_dx_array, age, ver, model, sex, disabl, verbose, never_trump, baserate);
@@ -130,6 +130,7 @@ function dx_raf(dx_array, age = 0, ver = '', model = '', sex = '', disabl = fals
  * @param {string[][]} dx_array accepts array of dx codes
  */
 function clean_dx(dx_array, ver = '') {
+  
   // Convert string to list, dedupe, and ensure DX are formatted correctly.
   for (var i = 0; i < dx_array.length; i++) {
     for (var j = 0; j < dx_array[i].length; j++) {
@@ -141,7 +142,7 @@ function clean_dx(dx_array, ver = '') {
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   var dx_values = clean_dxlist(temp_dx_array, ver);
   var dx_set_values = [];
   dx_values.forEach(v => dx_set_values.push(v));
@@ -164,7 +165,7 @@ function clean_cc(cc_array, ver = '') {
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   var hcc_values = clean_hcclist(temp_cc_array, ver);
   return hcc_values.toString();
 }
@@ -185,7 +186,7 @@ function cc_desc(cc_array, ver = '', age = 0, sex = '', verbose = false) {
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   verbose = verbose || default_verbose;
   var hcc_dict = hcc_dct(temp_cc_array, ver, age, sex, verbose);
   var hcc_cust_list = [];
@@ -203,8 +204,8 @@ To enable screen reader support, press Ctrl+Alt+Z To learn about keyboard shortc
  * @param {string[][]} cc accepts array of hcc codes
  */
 function cc_info(cc, ver = '', model = '', disabl = false, age = 0, never_trump = 0, baserate = 0.0) {
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var temp_hccmap, raf_value;
@@ -244,8 +245,8 @@ function cc_raf(cc_array, ver = '', model = '', disabl = false, age = 0, never_t
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var raf_value = hcc2raf(temp_cc_array, ver, model, disabl, age, never_trump, baserate);
@@ -268,7 +269,7 @@ function cc_combine(cc_array, ver = '', age = 0, disabl = false, never_trump = 0
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   never_trump = never_trump || default_never_trump;
   var hccs = prep_hccs(temp_cc_array, ver, age, disabl, never_trump);
   return hccs.toString();
@@ -302,8 +303,8 @@ function cc_increment_raf(base_cc_array, additional_cc_array, ver = '', model = 
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver|| default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   age = age || 0;
@@ -341,8 +342,8 @@ function cc_increment(base_cc_array, additional_cc_array, ver = '', model = '', 
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver|| default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   age = age || 0;
@@ -381,8 +382,8 @@ function cc_gaps(base_cc_array, additional_cc_array, ver = '', model = '', age =
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
   
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
 
   var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver, model, age, sex, disabl, baserate);
@@ -419,8 +420,8 @@ function cc_gaps_raf(base_cc_array, additional_cc_array, ver = '', model = '', a
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
   
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
 
   var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver, model, age, sex, disabl, baserate);
@@ -457,8 +458,8 @@ function cc_diff(base_cc_array = [], additional_cc_array = [], ver='', age=0, se
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver, age, sex, model, disabl, never_trump, baserate);
@@ -496,8 +497,8 @@ function cc_diff_raf(base_cc_array = [], additional_cc_array = [], ver='', age=0
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver, age, sex, model, disabl, never_trump, baserate);
@@ -533,8 +534,8 @@ function dx_increment(base_dx_array = [], additional_dx_array = [], ver = '', mo
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver|| default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var dx_dict  = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver, model, age, disabl, never_trump, baserate);
@@ -571,8 +572,8 @@ function dx_increment_raf(base_dx_array = [], additional_dx_array = [], ver = ''
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver|| default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var dx_dict  = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver, model, age, disabl, never_trump, baserate);
@@ -609,8 +610,8 @@ function dx_gap(base_dx_array = [], additional_dx_array = [],  ver = '', model =
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver, model, age, sex, disabl, baserate);
   var result = dx_dict['Deletes'] + "," + dx_dict['Downgraded'];
@@ -646,8 +647,8 @@ function dx_gap_raf(base_dx_array = [], additional_dx_array = [],  ver = '', mod
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver || default_ver;
-  model = model || default_model;
+  ver = ver.toLowerCase() || default_ver;
+  model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver, model, age, sex, disabl, baserate);
   var result = dx_dict['raf'];
@@ -922,7 +923,7 @@ function prep_hccs(hcc_list, ver, age, disabl, never_trump) {
 
 function trump_hccs(hcc_list, ver, never_trump) {
   // Given a list of HCCs and an HCC version, returns a list of HCCs after trumping
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   never_trump = never_trump || default_never_trump;
   var hccmap = default_hccmap[ver];
 
@@ -1184,7 +1185,7 @@ function member(condition_list, age, sex, model, orec, ver, baserate) {
 
 function condition_resolver(conditionlist, ver = '', never_trump = 0, allhcc = 0) {
   //need factoring
-  ver = ver || default_ver;
+  ver = ver.toLowerCase() || default_ver;
   never_trump = never_trump || default_never_trump;
   var list_hcc = [];
   for (item in conditionlist) {
@@ -1553,30 +1554,148 @@ function v22_interactions(ccs, disabl, age = '') {
   
   }
   // Community Interactions
-  int_hccs["HCC47_gCancer"] = my_dcs["CANCER"] && new Set([...new Set(["HCC47"])].filter(x => cc_set.has(x)));
-  int_hccs["HCC85_gDiabetesMellit"] = my_dcs["DIABETES"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
-  int_hccs["HCC85_gCopdCF"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
-  int_hccs["HCC85_gRenal_V23"] = my_dcs["RENAL"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
-  int_hccs["gRespDepandArre_gCopdCF"] = my_dcs["gCopdCF"] && my_dcs["CARD_RESP_FAIL"];
-  int_hccs["HCC85_HCC96"] = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC96"])].filter(x => cc_set.has(x)));
-  int_hccs["gSubstanceAbuse_gPsychiatric"] = my_dcs["gPsychiatric"] && my_dcs["gSubstanceAbuse"];
+  var hcc85_set = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  var hcc47_set = new Set([...new Set(["HCC47"])].filter(x => cc_set.has(x)));
+  var hcc96_set = new Set([...new Set(["HCC96"])].filter(x => cc_set.has(x)));
 
+  // int_hccs["HCC47_gCancer"] = my_dcs["CANCER"] && new Set([...new Set(["HCC47"])].filter(x => cc_set.has(x)));
+  if ( my_dcs["CANCER"].size && hcc47_set.size) {
+    int_hccs["HCC47_gCancer"] = hcc47_set;
+  }else {
+    int_hccs["HCC47_gCancer"] = new Set();
+  }
+
+  // int_hccs["HCC85_gDiabetesMellit"] = my_dcs["DIABETES"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (my_dcs["DIABETES"].size && hcc85_set.size) {
+      int_hccs["HCC85_gDiabetesMellit"] = hcc85_set;
+  }else {
+    int_hccs["HCC85_gDiabetesMellit"] = new Set();
+  }
+
+  // int_hccs["HCC85_gCopdCF"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (my_dcs["gCopdCF"].size && hcc85_set.size) {
+      int_hccs["HCC85_gCopdCF"] = hcc85_set;
+  }else {
+    int_hccs["HCC85_gCopdCF"] = new Set();
+  }
+
+  // int_hccs["HCC85_gRenal_V23"] = my_dcs["RENAL"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (my_dcs["RENAL"].size && hcc85_set.size) {
+      int_hccs["HCC85_gRenal_V23"] = hcc85_set;
+  }else {
+    int_hccs["HCC85_gRenal_V23"] = new Set();
+  }
+  // int_hccs["gRespDepandArre_gCopdCF"] = my_dcs["gCopdCF"] && my_dcs["CARD_RESP_FAIL"];
+  if (my_dcs["gCopdCF"].size && my_dcs["CARD_RESP_FAIL"].size) {
+    int_hccs["gRespDepandArre_gCopdCF"] = my_dcs["CARD_RESP_FAIL"];
+  }else {
+    int_hccs["gRespDepandArre_gCopdCF"] = new Set();
+  }
+  // int_hccs["HCC85_HCC96"] = new Set([...new Set(["HCC96"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (hcc96_set.size && hcc85_set.size) {
+    int_hccs["HCC85_HCC96"] = hcc96_set;
+  }else {
+    int_hccs["HCC85_HCC96"] = new Set();
+  }
+  // int_hccs["gSubstanceAbuse_gPsychiatric_V23"] = my_dcs["gPsychiatric"] && my_dcs["gSubstanceAbuse"];
+  if (my_dcs["gPsychiatric"].size && my_dcs["gSubstanceAbuse"].size) {
+    int_hccs["gSubstanceAbuse_gPsychiatric"] =  my_dcs["gSubstanceAbuse"];
+  }else {
+    int_hccs["gSubstanceAbuse_gPsychiatric"] = new Set();
+  }
   // institutional model interactions
+  var hcc188_set = new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x)));
+  var hcc114_set = new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
+  var hcc57_set = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x)));
+  var hcc79_set = new Set([...new Set(["HCC79"])].filter(x => cc_set.has(x)));
+  
   int_hccs["PRESSURE_ULCER"] = new Set([...new Set(["HCC157", "HCC158"])].filter(x => cc_set.has(x)));
-  int_hccs["CHF_gCopdCF"] = my_dcs["CHF"] && my_dcs["gCopdCF"];
-  int_hccs["gCopdCF_CARD_RESP_FAIL"] = my_dcs["gCopdCF"] && my_dcs["CARD_RESP_FAIL"];
-  int_hccs["SEPSIS_PRESSURE_ULCER"] = my_dcs["SEPSIS"] && int_hccs["PRESSURE_ULCER"];
-  int_hccs["SEPSIS_ARTIF_OPENINGS"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x)));
-  int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];
-  int_hccs["DIABETES_CHF"] = my_dcs["DIABETES"] && my_dcs["CHF"];
-  int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
-  int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];
-  int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
-  int_hccs["SCHIZOPHRENIA_gCopdCF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["gCopdCF"];
-  int_hccs["SCHIZOPHRENIA_CHF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["CHF"];
-  int_hccs["SCHIZOPHRENIA_SEIZURES"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC79"])].filter(x => cc_set.has(x)));
+  //int_hccs["CHF_gCopdCF"] = my_dcs["CHF"] && my_dcs["gCopdCF"];
+  if (my_dcs["CHF"].size && my_dcs["gCopdCF"].size) {
+    int_hccs["CHF_gCopdCF"] =  my_dcs["gCopdCF"];
+  }else {
+    int_hccs["CHF_gCopdCF"] = new Set();
+  }
 
-  if (typeof disabl !== 'undefined') {
+  //int_hccs["gCopdCF_CARD_RESP_FAIL"] = my_dcs["gCopdCF"] && my_dcs["CARD_RESP_FAIL"];
+  if (my_dcs["CARD_RESP_FAIL"].size && my_dcs["gCopdCF"].size) {
+    int_hccs["gCopdCF_CARD_RESP_FAIL"] =  my_dcs["CARD_RESP_FAIL"];
+  }else {
+    int_hccs["gCopdCF_CARD_RESP_FAIL"] = new Set();
+  }
+
+  //int_hccs["SEPSIS_PRESSURE_ULCER"] = my_dcs["SEPSIS"] && int_hccs["PRESSURE_ULCER"];
+  if (my_dcs["SEPSIS"].size && int_hccs["PRESSURE_ULCER"].size) {
+    int_hccs["SEPSIS_PRESSURE_ULCER"] =  int_hccs["PRESSURE_ULCER"];
+  }else {
+    int_hccs["SEPSIS_PRESSURE_ULCER"] = new Set();
+  }
+
+
+  // int_hccs["SEPSIS_ARTIF_OPENINGS"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x)));
+  if (my_dcs["SEPSIS"].size && hcc188_set.size) {
+    int_hccs["SEPSIS_ARTIF_OPENINGS"] = hcc188_set;
+  }else {
+    int_hccs["SEPSIS_ARTIF_OPENINGS"] = new Set();
+  }
+
+  // int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];
+  if (int_hccs["PRESSURE_ULCER"].size && hcc188_set.size) {
+    int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = int_hccs["PRESSURE_ULCER"];
+  }else {
+    int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = new Set();
+  }
+
+  // int_hccs["DIABETES_CHF"] = my_dcs["DIABETES"] && my_dcs["CHF"];
+  if (my_dcs["DIABETES"].size && my_dcs["CHF"].size) {
+    int_hccs["DIABETES_CHF"] = my_dcs["CHF"];
+  }else {
+    int_hccs["DIABETES_CHF"] = new Set();
+  }
+
+
+  // int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
+  if (my_dcs["gCopdCF"].size && hcc114_set.size) {
+    int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = hcc114_set;
+  }else {
+    int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = new Set();
+  }
+
+  // int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];
+  if (int_hccs["PRESSURE_ULCER"].size && hcc114_set.size) {
+    int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = int_hccs["PRESSURE_ULCER"];
+  }else {
+    int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = new Set();
+  }
+
+
+  // int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
+  if (my_dcs["SEPSIS"].size && hcc114_set.size) {
+    int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = hcc114_set;
+  }else {
+    int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = new Set();
+  }
+
+  // int_hccs["SCHIZOPHRENIA_gCopdCF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["gCopdCF"];
+  if (my_dcs["gCopdCF"].size && hcc57_set.size) {
+    int_hccs["SCHIZOPHRENIA_gCopdCF"] = my_dcs["gCopdCF"];
+  }else {
+    int_hccs["SCHIZOPHRENIA_gCopdCF"] = new Set();
+  }
+  // int_hccs["SCHIZOPHRENIA_CHF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["CHF"];
+  if (my_dcs["CHF"].size && hcc57_set.size) {
+    int_hccs["SCHIZOPHRENIA_CHF"] = my_dcs["CHF"];
+  }else {
+    int_hccs["SCHIZOPHRENIA_CHF"] = new Set();
+  }
+  // int_hccs["SCHIZOPHRENIA_SEIZURES"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC79"])].filter(x => cc_set.has(x)));
+  if (hcc79_set.size && hcc57_set.size) {
+    int_hccs["SCHIZOPHRENIA_SEIZURES"] = hcc79_set;
+  }else {
+    int_hccs["SCHIZOPHRENIA_SEIZURES"] = new Set();
+  }
+
+  if (disabl === true) {
       int_hccs["DISABLED_HCC85"] = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
       int_hccs["DISABLED_PRESSURE_ULCER"] = int_hccs["PRESSURE_ULCER"];
       int_hccs["DISABLED_HCC161"] = new Set([...new Set(["HCC161"])].filter(x => cc_set.has(x)));
@@ -1585,7 +1704,7 @@ function v22_interactions(ccs, disabl, age = '') {
       int_hccs["DISABLED_HCC6"] = new Set([...new Set(["HCC6"])].filter(x => cc_set.has(x)));
 
       if (typeof age !== 'undefined' && age < 65) {
-          int_hccs["disable_substAbuse_psych_V23"] = int_hccs["gSubstanceAbuse_gPsychiatric_V23"]
+          int_hccs["disable_substAbuse_psych_V23"] = int_hccs["gSubstanceAbuse_gPsychiatric"]
       }
   }
 
@@ -1662,7 +1781,7 @@ function v23_interactions(ccs, disabl, age = '') {
   }
   
   // int_hccs["HCC85_gRenal_V23"] = my_dcs["RENAL_V23"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
-  if (my_dcs["gCopdCF"].size && hcc85_set.size) {
+  if ( my_dcs["RENAL_V23"].size && hcc85_set.size) {
       int_hccs["HCC85_gRenal_V23"] = hcc85_set;
   }else {
     int_hccs["HCC85_gRenal_V23"] = new Set();
@@ -1801,9 +1920,9 @@ function v24_interactions(ccs, disabl, age = '') {
   var cc_set = new Set(ccs);
   var int_hccs = {};
    var cnt= cc_set.length;
-   int_hccs["D10P"]=cnt>9
+   int_hccs["D10P"]=cnt > 9
    var index = "D".concat(cnt)
-   int_hccs[index] = (cnt > 3 && cnt <10)
+   int_hccs[index] = (cnt > 3 && cnt < 10)
   // diagnostic categories
 
   var diag_cats = {
@@ -1829,27 +1948,119 @@ function v24_interactions(ccs, disabl, age = '') {
   
   }
   // Community Interactions
-  int_hccs["HCC47_gCancer"] = my_dcs["CANCER"] && new Set([...new Set(["HCC47"])].filter(x => cc_set.has(x)));
-  int_hccs["HCC85_gDiabetesMellit"] = my_dcs["DIABETES"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
-  int_hccs["HCC85_gCopdCF"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
-  int_hccs["HCC85_gRenal_V24"] = my_dcs["RENAL_V24"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
-  int_hccs["gRespDepandArre_gCopdCF"] = my_dcs["gCopdCF"] && my_dcs["CARD_RESP_FAIL"];
-  int_hccs["HCC85_HCC96"] = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC96"])].filter(x => cc_set.has(x)));
-  int_hccs["gSubstanceAbuse_gPsychiatric_V24"] = my_dcs["gPsychiatric_V24"] && my_dcs["gSubstanceAbuse_V24"];
+  var hcc85_set = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  var hcc47_set = new Set([...new Set(["HCC47"])].filter(x => cc_set.has(x)));
+  var hcc96_set = new Set([...new Set(["HCC96"])].filter(x => cc_set.has(x)));
+  // int_hccs["HCC47_gCancer"] = my_dcs["CANCER"] && new Set([...new Set(["HCC47"])].filter(x => cc_set.has(x)));
+  if ( my_dcs["CANCER"].size && hcc47_set.size) {
+      int_hccs["HCC47_gCancer"] = hcc47_set;
+  }else {
+    int_hccs["HCC47_gCancer"] = new Set();
+  }
+  
+  // int_hccs["HCC85_gDiabetesMellit"] = my_dcs["DIABETES"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (my_dcs["DIABETES"].size && hcc85_set.size) {
+      int_hccs["HCC85_gDiabetesMellit"] = hcc85_set;
+  }else {
+    int_hccs["HCC85_gDiabetesMellit"] = new Set();
+  }
 
+  // int_hccs["HCC85_gCopdCF"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (my_dcs["gCopdCF"].size && hcc85_set.size) {
+      int_hccs["HCC85_gCopdCF"] = hcc85_set;
+  }else {
+    int_hccs["HCC85_gCopdCF"] = new Set();
+  }
+  
+  // int_hccs["HCC85_gRenal_V24"] = my_dcs["RENAL_V24"] && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (my_dcs["RENAL_V24"].size && hcc85_set.size) {
+      int_hccs["HCC85_gRenal_V24"] = hcc85_set;
+  }else {
+    int_hccs["HCC85_gRenal_V24"] = new Set();
+  }
+  // int_hccs["gRespDepandArre_gCopdCF"] = my_dcs["gCopdCF"] && my_dcs["CARD_RESP_FAIL"];
+  if (my_dcs["gCopdCF"].size && my_dcs["CARD_RESP_FAIL"].size) {
+    int_hccs["gRespDepandArre_gCopdCF"] = my_dcs["CARD_RESP_FAIL"];
+  }else {
+    int_hccs["gRespDepandArre_gCopdCF"] = new Set();
+  }
+  // int_hccs["HCC85_HCC96"] = new Set([...new Set(["HCC96"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
+  if (hcc96_set.size && hcc85_set.size) {
+    int_hccs["HCC85_HCC96"] = hcc96_set;
+  }else {
+    int_hccs["HCC85_HCC96"] = new Set();
+  }
+  // int_hccs["gSubstanceAbuse_gPsychiatric_V24"] = my_dcs["gPsychiatric_V24"] && my_dcs["gSubstanceAbuse_V24"];
+  if (my_dcs["gPsychiatric_V24"].size && my_dcs["gSubstanceAbuse_V24"].size) {
+    int_hccs["gSubstanceAbuse_gPsychiatric_V24"] =  my_dcs["gSubstanceAbuse_V24"];
+  }else {
+    int_hccs["gSubstanceAbuse_gPsychiatric_V24"] = new Set();
+  }
+  
   // institutional model interactions
-  int_hccs["PRESSURE_ULCER"] = new Set([...new Set(["HCC157", "HCC158"])].filter(x => cc_set.has(x)));   
-  int_hccs["SEPSIS_PRESSURE_ULCER"] = my_dcs["SEPSIS"] && int_hccs["PRESSURE_ULCER"];
-  int_hccs["SEPSIS_ARTIF_OPENINGS"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x)));
-  int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];       
-  int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
-  int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];
-  int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
-  int_hccs["SCHIZOPHRENIA_gCopdCF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["gCopdCF"];
-  int_hccs["SCHIZOPHRENIA_CHF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["CHF"];
-  int_hccs["SCHIZOPHRENIA_SEIZURES"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC79"])].filter(x => cc_set.has(x)));
+  var hcc188_set = new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x)));
+  var hcc114_set = new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
+  var hcc57_set = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x)));
+  var hcc79_set = new Set([...new Set(["HCC79"])].filter(x => cc_set.has(x)));
+  int_hccs["PRESSURE_ULCER"] = new Set([...new Set(["HCC157", "HCC158"])].filter(x => cc_set.has(x)));
 
-  if (typeof disabl !== 'undefined') {
+
+  // int_hccs["SEPSIS_PRESSURE_ULCER"] = my_dcs["SEPSIS"] && int_hccs["PRESSURE_ULCER"];
+  if (my_dcs["SEPSIS"].size && int_hccs["PRESSURE_ULCER"].size) {
+    int_hccs["SEPSIS_PRESSURE_ULCER"] =  int_hccs["PRESSURE_ULCER"];
+  }else {
+    int_hccs["SEPSIS_PRESSURE_ULCER"] = new Set();
+  }
+  // int_hccs["SEPSIS_ARTIF_OPENINGS"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x)));
+  if (my_dcs["SEPSIS"].size && hcc188_set.size) {
+    int_hccs["SEPSIS_ARTIF_OPENINGS"] = hcc188_set;
+  }else {
+    int_hccs["SEPSIS_ARTIF_OPENINGS"] = new Set();
+  }
+  // int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = new Set([...new Set(["HCC188"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];
+  if (int_hccs["PRESSURE_ULCER"].size && hcc188_set.size) {
+    int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = int_hccs["PRESSURE_ULCER"];
+  }else {
+    int_hccs["ART_OPENINGS_PRESSURE_ULCER"] = new Set();
+  }
+
+  // int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = my_dcs["gCopdCF"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
+  if (my_dcs["gCopdCF"].size && hcc114_set.size) {
+    int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = hcc114_set;
+  }else {
+    int_hccs["gCopdCF_ASP_SPEC_B_PNEUM"] = new Set();
+  }
+  // int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x))) && int_hccs["PRESSURE_ULCER"];
+  if (int_hccs["PRESSURE_ULCER"].size && hcc114_set.size) {
+    int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = int_hccs["PRESSURE_ULCER"];
+  }else {
+    int_hccs["ASP_SPEC_BACT_PNEUM_PRES_ULC"] = new Set();
+  }
+  // int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = my_dcs["SEPSIS"] && new Set([...new Set(["HCC114"])].filter(x => cc_set.has(x)));
+  if (my_dcs["SEPSIS"].size && hcc114_set.size) {
+    int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = hcc114_set;
+  }else {
+    int_hccs["SEPSIS_ASP_SPEC_BACT_PNEUM"] = new Set();
+  }
+  // int_hccs["SCHIZOPHRENIA_gCopdCF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["gCopdCF"];
+  if (my_dcs["gCopdCF"].size && hcc57_set.size) {
+    int_hccs["SCHIZOPHRENIA_gCopdCF"] = my_dcs["gCopdCF"];
+  }else {
+    int_hccs["SCHIZOPHRENIA_gCopdCF"] = new Set();
+  }
+  // int_hccs["SCHIZOPHRENIA_CHF"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && my_dcs["CHF"];
+  if (my_dcs["CHF"].size && hcc57_set.size) {
+    int_hccs["SCHIZOPHRENIA_CHF"] = my_dcs["CHF"];
+  }else {
+    int_hccs["SCHIZOPHRENIA_CHF"] = new Set();
+  }
+  // int_hccs["SCHIZOPHRENIA_SEIZURES"] = new Set([...new Set(["HCC57"])].filter(x => cc_set.has(x))) && new Set([...new Set(["HCC79"])].filter(x => cc_set.has(x)));
+  if (hcc79_set.size && hcc57_set.size) {
+    int_hccs["SCHIZOPHRENIA_SEIZURES"] = hcc79_set;
+  }else {
+    int_hccs["SCHIZOPHRENIA_SEIZURES"] = new Set();
+  }
+  if (disabl == true) {
       int_hccs["DISABLED_HCC85"] = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
       int_hccs["DISABLED_PRESSURE_ULCER"] = int_hccs["PRESSURE_ULCER"];
       int_hccs["DISABLED_HCC161"] = new Set([...new Set(["HCC161"])].filter(x => cc_set.has(x)));
@@ -1858,7 +2069,7 @@ function v24_interactions(ccs, disabl, age = '') {
       int_hccs["DISABLED_HCC6"] = new Set([...new Set(["HCC6"])].filter(x => cc_set.has(x)));
 
       if (typeof age !== 'undefined' && age < 65) {
-          int_hccs["disable_substAbuse_psych_V23"] = int_hccs["gSubstanceAbuse_gPsychiatric_V23"]
+          int_hccs["disable_substAbuse_psych_V24"] = int_hccs["gSubstanceAbuse_gPsychiatric_V24"]
       }
   }
 
