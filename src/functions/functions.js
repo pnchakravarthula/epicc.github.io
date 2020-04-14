@@ -1,4 +1,4 @@
-﻿var default_dxmap, default_hccmap, default_hcccoefn, dummy;
+﻿var default_dxmap, default_hccmap, default_hcccoefn;
 fetch('https://pnchakravarthula.github.io/epicc.github.io/dist/load_dxmap.json')
 .then(response => response.json())
 .then(data => {
@@ -38,8 +38,8 @@ function demo_raf(condition_list, age = 65, sex = 'M', model = '', orec = '0', v
   for (i = 0; i < temp_condition_list.length; i++) {
     temp_condition_list[i] = temp_condition_list[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
 
   var raf_dict =  member(condition_list, age, sex, model, orec, ver, baserate);
@@ -63,7 +63,7 @@ function dx_desc(dx_array, ver = '', age = 0, sex = '', verbose = true) {
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   verbose = verbose || default_verbose;
   
   var hcc_dict = dx_hccs(temp_dx_array, ver, age, sex, verbose);
@@ -91,9 +91,9 @@ function dx2cc(dx_array, age = 0, ver = '', sex = '', disabl = false, never_trum
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   never_trump = never_trump || default_never_trump;
-  var unique_hccs = dx2hcc(temp_dx_array, age, ver, sex, disabl, never_trump, verboses);
+  var unique_hccs = dx2hcc(temp_dx_array, age, ver, sex, disabl, never_trump, verbose);
   return unique_hccs.toString();
 }
 
@@ -116,8 +116,8 @@ function dx_raf(dx_array, age = 0, ver = '', model = '', sex = '', disabl = fals
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var raf_value = dx2raf(temp_dx_array, age, ver, model, sex, disabl, verbose, never_trump, baserate);
@@ -142,7 +142,7 @@ function clean_dx(dx_array, ver = '') {
   for (i = 0; i < temp_dx_array.length; i++) {
     temp_dx_array[i] = temp_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   var dx_values = clean_dxlist(temp_dx_array, ver);
   var dx_set_values = [];
   dx_values.forEach(v => dx_set_values.push(v));
@@ -165,7 +165,7 @@ function clean_cc(cc_array, ver = '') {
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   var hcc_values = clean_hcclist(temp_cc_array, ver);
   return hcc_values.toString();
 }
@@ -186,7 +186,7 @@ function cc_desc(cc_array, ver = '', age = 0, sex = '', verbose = false) {
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   verbose = verbose || default_verbose;
   var hcc_dict = hcc_dct(temp_cc_array, ver, age, sex, verbose);
   var hcc_cust_list = [];
@@ -204,8 +204,8 @@ To enable screen reader support, press Ctrl+Alt+Z To learn about keyboard shortc
  * @param {string[][]} cc accepts array of hcc codes
  */
 function cc_info(cc, ver = '', model = '', disabl = false, age = 0, never_trump = 0, baserate = 0.0) {
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var temp_hccmap, raf_value;
@@ -245,8 +245,9 @@ function cc_raf(cc_array, ver = '', model = '', disabl = false, age = 0, never_t
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
+  // model = model.toUpperCase() || default_model;
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var raf_value = hcc2raf(temp_cc_array, ver, model, disabl, age, never_trump, baserate);
@@ -269,7 +270,7 @@ function cc_combine(cc_array, ver = '', age = 0, disabl = false, never_trump = 0
   for (i = 0; i < temp_cc_array.length; i++) {
     temp_cc_array[i] = temp_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   never_trump = never_trump || default_never_trump;
   var hccs = prep_hccs(temp_cc_array, ver, age, disabl, never_trump);
   return hccs.toString();
@@ -303,8 +304,8 @@ function cc_increment_raf(base_cc_array, additional_cc_array, ver = '', model = 
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   age = age || 0;
@@ -342,8 +343,8 @@ function cc_increment(base_cc_array, additional_cc_array, ver = '', model = '', 
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   age = age || 0;
@@ -382,8 +383,8 @@ function cc_gaps(base_cc_array, additional_cc_array, ver = '', model = '', age =
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
   
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
 
   var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver, model, age, sex, disabl, baserate);
@@ -420,8 +421,8 @@ function cc_gaps_raf(base_cc_array, additional_cc_array, ver = '', model = '', a
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
   
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
 
   var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver, model, age, sex, disabl, baserate);
@@ -458,8 +459,8 @@ function cc_diff(base_cc_array = [], additional_cc_array = [], ver='', age=0, se
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver, age, sex, model, disabl, never_trump, baserate);
@@ -497,8 +498,8 @@ function cc_diff_raf(base_cc_array = [], additional_cc_array = [], ver='', age=0
   for (i = 0; i < temp_additional_cc_array.length; i++) {
     temp_additional_cc_array[i] = temp_additional_cc_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver, age, sex, model, disabl, never_trump, baserate);
@@ -534,8 +535,8 @@ function dx_increment(base_dx_array = [], additional_dx_array = [], ver = '', mo
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var dx_dict  = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver, model, age, disabl, never_trump, baserate);
@@ -572,8 +573,8 @@ function dx_increment_raf(base_dx_array = [], additional_dx_array = [], ver = ''
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var dx_dict  = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver, model, age, disabl, never_trump, baserate);
@@ -610,8 +611,8 @@ function dx_gap(base_dx_array = [], additional_dx_array = [],  ver = '', model =
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver, model, age, sex, disabl, baserate);
   var result = dx_dict['Deletes'] + "," + dx_dict['Downgraded'];
@@ -647,8 +648,8 @@ function dx_gap_raf(base_dx_array = [], additional_dx_array = [],  ver = '', mod
   for (i = 0; i < temp_additional_dx_array.length; i++) {
     temp_additional_dx_array[i] = temp_additional_dx_array[i].toString().trim();
   }
-  ver = ver.toLowerCase() || default_ver;
-  model = model.toUpperCase() || default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver, model, age, sex, disabl, baserate);
   var result = dx_dict['raf'];
@@ -833,7 +834,8 @@ function dxdct_hccs(dx_dct, never_trump = 0) {
     for (var key in dx_dct) {
         if (dx_dct.hasOwnProperty(key)) { 
             for (var hcc in dx_dct[key]['hccs']){
-                hcc_list.add(dx_dct[key]['hccs'][hcc]);
+                // hcc_list.add(dx_dct[key]['hccs'][hcc]);
+                hcc_list.add(hcc);
             }
         }
     }
@@ -923,7 +925,7 @@ function prep_hccs(hcc_list, ver, age, disabl, never_trump) {
 
 function trump_hccs(hcc_list, ver, never_trump) {
   // Given a list of HCCs and an HCC version, returns a list of HCCs after trumping
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   never_trump = never_trump || default_never_trump;
   var hccmap = default_hccmap[ver];
 
@@ -1185,7 +1187,7 @@ function member(condition_list, age, sex, model, orec, ver, baserate) {
 
 function condition_resolver(conditionlist, ver = '', never_trump = 0, allhcc = 0) {
   //need factoring
-  ver = ver.toLowerCase() || default_ver;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
   never_trump = never_trump || default_never_trump;
   var list_hcc = [];
   for (item in conditionlist) {
@@ -1303,12 +1305,12 @@ function agesex_edits(dx_dct, age, sex) {
       // Split emphysema diagnoses to age 18+ (HCC 160) and age 2-17 (HCC160; split not needed in HHS model).
       // If age <2 out of payment model
       if (age < 2 && ed_emphysema.includes(dx)) {
-        dx_dct[dx]['hccs'] = (["HCC-1"]);
+        dx_dct[dx]['hccs'] = (["HCC1"]);
       }
 
       // Edit for newborn low birthweight. If age 1+ out of payment model
       if (age != 0 && ed_low_bw.includes(dx)) {
-        dx_dct[dx]['hccs'] = (["HCC-1"]);
+        dx_dct[dx]['hccs'] = (["HCC1"]);
       }
 
       // Split conjoined twins diagnoses to age 1+ (HCC 97) and age <1 (HCC 247)
@@ -1318,7 +1320,7 @@ function agesex_edits(dx_dct, age, sex) {
 
       // Neonatal effects of maternal drug abuse: If age 2+ out of payment model
       if (age >= 2 && ed_newbn_substance.includes(dx)) {
-        dx_dct[dx]['hccs'] = (["HCC-1"]);
+        dx_dct[dx]['hccs'] = (["HCC1"]);
       }
 
       // Split chronic respiratory disease arising in the perinatal period diagnoses to age 2+
@@ -1329,7 +1331,7 @@ function agesex_edits(dx_dct, age, sex) {
 
       // Mood disorder: Edit for targeted age of diagnosis. If age <6 or age >18 out of payment model.
       if (age < 6 || age > 18 && ed_disruptive_mood.includes(dx)) {
-        dx_dct[dx]['hccs'] = (["HCC-1"]);
+        dx_dct[dx]['hccs'] = (["HCC1"]);
       }
 
       // Split hemophilia diagnoses to male (HCC 66 if age <65 or HCC 66 if age 65+; age split not needed in HHS model)
@@ -1342,7 +1344,7 @@ function agesex_edits(dx_dct, age, sex) {
 
   edit_dct = {};  // Build new dict after filtering out all HCCs edited out
   for (dx in dx_dct) {
-      if (dx_dct[dx]['hccs'] != (["HCC-1"])) {
+      if (dx_dct[dx]['hccs'] != (["HCC1"])) {
           edit_dct[dx] = dx_dct[dx];
       }
   }
@@ -1377,8 +1379,8 @@ function get_raf(demo_lst, hcc_lst, ver, model, verbose, baserate) {
   :return: dict
           raf_dct
   */
-  ver = ver || default_ver;
-  model = model|| default_model;
+  ver === null ? ver = default_ver : ver = ver.toLowerCase();
+  model === null ? model = default_model : model = model.toUpperCase();
   baserate = baserate || default_baserate;
   verbose = verbose || default_verbose;
 
@@ -1919,12 +1921,16 @@ function v24_interactions(ccs, disabl, age = '') {
   */
   var cc_set = new Set(ccs);
   var int_hccs = {};
-   var cnt= cc_set.length;
-   int_hccs["D10P"]=cnt > 9
-   var index = "D".concat(cnt)
-   int_hccs[index] = (cnt > 3 && cnt < 10)
-  // diagnostic categories
+   var cnt = cc_set.length;
+   if (cnt > 9) {
+    int_hccs["D10P"];
+   }
+   if (cnt > 3 && cnt < 10) {
+    var index = "D".concat(cnt);
+    int_hccs[index];
+   } 
 
+  // diagnostic categories
   var diag_cats = {
       "CANCER": new Set(["HCC8", "HCC9", "HCC10", "HCC11", "HCC12"]),
       "DIABETES": new Set(["HCC17", "HCC18", "HCC19"]),
