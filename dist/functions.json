@@ -100,6 +100,11 @@
                     "type": "any"
                 },
                 {
+                    "name": "model",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
                     "name": "sex",
                     "optional": true,
                     "type": "any"
@@ -353,6 +358,11 @@
                     "type": "any"
                 },
                 {
+                    "name": "model",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
                     "name": "age",
                     "optional": true,
                     "type": "any"
@@ -379,12 +389,14 @@
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "base_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "additional_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
@@ -429,12 +441,14 @@
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "base_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "additional_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
@@ -479,12 +493,14 @@
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "base_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "additional_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
@@ -529,12 +545,14 @@
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "base_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
                     "description": "accepts array of cc codes",
                     "dimensionality": "matrix",
                     "name": "additional_cc_array",
+                    "optional": true,
                     "type": "string"
                 },
                 {
