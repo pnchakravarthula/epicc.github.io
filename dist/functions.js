@@ -417,11 +417,13 @@ function cc_info(cc) {
 
   var hccmap = default_hccmap[ver];
   temp_hccmap = hccmap[temp_cc];
-  raf_value = hcc2raf(temp_cc, ver, model, disabl, age, never_trump, baserate); // var result = {desc: temp_hccmap['desc'], children: temp_hccmap['children'], parents: temp_hccmap['parents'], RAF: raf_value};
+  raf_value = hcc2raf(temp_cc, ver, model, disabl, age, never_trump, baserate);
+  raf_value = parseFloat(raf_value);
+  raf_value = raf_value.toFixed(3); // var result = {desc: temp_hccmap['desc'], children: temp_hccmap['children'], parents: temp_hccmap['parents'], RAF: raf_value};
   // result = JSON.stringify(result);
   // return result.replace(/"/g, '');
 
-  var result = "desc: ".concat(temp_hccmap['desc'], "; children: ").concat(temp_hccmap['children'], "; parents: ").concat(temp_hccmap['parents'], "; RAF: ").concat(raf_value);
+  var result = "desc: ".concat(temp_hccmap['desc'], ", children: ").concat(temp_hccmap['children'], ", parents: ").concat(temp_hccmap['parents'], ", RAF: ").concat(raf_value);
   return result;
 }
 /**
@@ -767,7 +769,7 @@ function cc_diff() {
   // result = JSON.stringify(result);
   // return result.replace(/"/g, '');
 
-  var result = "adds: ".concat(cclist['adds'], "; upgraded: ").concat(cclist['upgraded'], "; downgraded: ").concat(cclist['downgraded'], "; downgraded_to: ").concat(cclist['downgrade_to'], "; deletes: ").concat(cclist['deletes']);
+  var result = "adds: ".concat(cclist['adds'], ", upgraded: ").concat(cclist['upgraded'], ", downgraded: ").concat(cclist['downgraded'], ", downgraded_to: ").concat(cclist['downgrade_to'], ", deletes: ").concat(cclist['deletes']);
   return result;
 }
 /**

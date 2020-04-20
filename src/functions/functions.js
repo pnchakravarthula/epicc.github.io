@@ -214,10 +214,12 @@ function cc_info(cc, ver='', model='', disabl=false, age=0, never_trump=0, baser
   var hccmap = default_hccmap[ver];
   temp_hccmap = hccmap[temp_cc];
   raf_value = hcc2raf(temp_cc, ver, model, disabl, age, never_trump, baserate);
+  raf_value = parseFloat(raf_value);
+  raf_value = raf_value.toFixed(3);
   // var result = {desc: temp_hccmap['desc'], children: temp_hccmap['children'], parents: temp_hccmap['parents'], RAF: raf_value};
   // result = JSON.stringify(result);
   // return result.replace(/"/g, '');
-  var result = `desc: ${temp_hccmap['desc']}; children: ${temp_hccmap['children']}; parents: ${temp_hccmap['parents']}; RAF: ${raf_value}`;
+  var result = `desc: ${temp_hccmap['desc']}, children: ${temp_hccmap['children']}, parents: ${temp_hccmap['parents']}, RAF: ${raf_value}`;
   return result;
 }
 
@@ -467,7 +469,7 @@ function cc_diff(base_cc_array=[], additional_cc_array=[], ver='', age=0, sex=''
   // var result = {adds: cclist['adds'], upgraded: cclist['upgraded'], downgraded: cclist['downgraded'], downgraded_to: cclist['downgrade_to'], deletes: cclist['deletes']};
   // result = JSON.stringify(result);
   // return result.replace(/"/g, '');
-  var result = `adds: ${cclist['adds']}; upgraded: ${cclist['upgraded']}; downgraded: ${cclist['downgraded']}; downgraded_to: ${cclist['downgrade_to']}; deletes: ${cclist['deletes']}`;
+  var result = `adds: ${cclist['adds']}, upgraded: ${cclist['upgraded']}, downgraded: ${cclist['downgraded']}, downgraded_to: ${cclist['downgrade_to']}, deletes: ${cclist['deletes']}`;
   return result;
 }
 
