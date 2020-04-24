@@ -703,6 +703,90 @@
             "result": {}
         },
         {
+            "description": "dx_diffc",
+            "id": "DX_DIFFC",
+            "name": "DX_DIFFC",
+            "parameters": [
+                {
+                    "description": "accepts array of dx codes",
+                    "dimensionality": "matrix",
+                    "name": "base_dx_array",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "accepts array of dxs codes",
+                    "dimensionality": "matrix",
+                    "name": "additional_dx_array",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "model",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "never_trump",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "baserate",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "dx_diffc_raf",
+            "id": "DX_DIFFC_RAF",
+            "name": "DX_DIFFC_RAF",
+            "parameters": [
+                {
+                    "description": "accepts array of dx codes",
+                    "dimensionality": "matrix",
+                    "name": "base_dx_array",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "description": "accepts array of dxs codes",
+                    "dimensionality": "matrix",
+                    "name": "additional_dx_array",
+                    "optional": true,
+                    "type": "string"
+                },
+                {
+                    "name": "ver",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "model",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "never_trump",
+                    "optional": true,
+                    "type": "any"
+                },
+                {
+                    "name": "baserate",
+                    "optional": true,
+                    "type": "any"
+                }
+            ],
+            "result": {}
+        },
+        {
             "description": "Returns the net incremental change between dx_lists, for example for calculating the value of a coding project over claims. Equivalent of +Adds - Upgraded in the format('+dx001, +dx18, - dx019')",
             "id": "DX_INCREMENT",
             "name": "DX_INCREMENT",
