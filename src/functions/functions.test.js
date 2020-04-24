@@ -96,13 +96,13 @@ expect(dx_increment("E119,F10250","E1042,F1020")).not.toBe('C770');
 });
 
 //dx_increment_raf Pass Test Cases
-test('dx_increment_raf: input: "E119,F1110","E1111,E1042,F1020","v23","CPD" output: "0.254"', () => {
-expect(dx_increment_raf("E119,F1110","E1111,E1042,F1020","v23","CPD")).toBe('0.254');
+test('dx_increment_raf: input: "E119,F1110","E1111,E1042,F1020","v23","CPD" output: "0.201"', () => {
+expect(dx_increment_raf("E119,F1110","E1111,E1042,F1020","v23","CPD")).toBe('0.201');
 });
 
 // dx_increment_raf Fail Test Cases
-test('dx_increment_raf: input: "E119,F1110","E1111,E1042,F1020","v23","CPD" output: "0.254"', () => {
-expect(dx_increment_raf("E119,F1110,K7111,D599,I213","E1111,F1020,K744,D599,C770")).not.toBe('0.254');
+test('dx_increment_raf: input: "E119,F1110","E1111,E1042,F1020","v23","CPD" output: "0.201"', () => {
+expect(dx_increment_raf("E119,F1110,K7111,D599,I213","E1111,F1020,K744,D599,C770")).not.toBe('0.201');
 });
 
 // dx_gaps Pass Test Cases
@@ -140,9 +140,11 @@ expect(cc_desc("19","v23")).not.toBe("HCC1:HIV/AIDS");
 test('Test for CC_INFO (CASE 1)', () => {
 expect(cc_info("HCC85", "v23", "CFA")).toBe("desc: Congestive Heart Failure, children: , parents: , RAF: 0.355");
 });
+
 test('Test for CC_INFO (CASE 2)', () => {
 expect(cc_info("HCC10", "v22", "CPD")).toBe("desc: Lymphoma and Other Cancers, children: HCC11,HCC12, parents: HCC8,HCC9, RAF: 0.577");
 });
+
 test('Test for CC_INFO (CASE 3) {negative}', () => {
 expect(cc_info("HCC96", "v23", "INS")).not.toBe("desc: Spinal Cord Disorders/Injuries, children: HCC169, parents: HCC70, HCC71, RAF: 0.519");
 });
@@ -150,26 +152,30 @@ expect(cc_info("HCC96", "v23", "INS")).not.toBe("desc: Spinal Cord Disorders/Inj
 // test for cc_ raf
 test('Test for CC_RAF (case 1)', () => {
 expect(cc_raf("HCC19","v24")).toBe('0.106');
-});
+})
 test('Test for CC_RAF (case 2)', () => {
 expect(cc_raf("HCC1","v23")).toBe('0.344');
-});
+})
 test('Test for CC_RAF (case 8)', () => {
 expect(cc_raf("HCC8","v22")).not.toBe('0.344');
-});
+})
 
 // Test for CC_Combine
 test('Test for CC_COMBINE (CASE 1) ', () => {
 expect(cc_combine("HCC56,HCC57", "v24")).toBe("HCC56,HCC57,gSubstanceAbuse_gPsychiatric_V24");
 });
+
 test('Test for CC_COMBINE (CASE 2) ', () => {
 expect(cc_combine("HCC2,HCC158", "v24","INS")).toBe("HCC2,HCC158,PRESSURE_ULCER,SEPSIS_PRESSURE_ULCER");
 });
+
+
 test('Test for CC_COMBINE (CASE 3) {negative} ', () => {
 expect(cc_combine("HCC17,HCC18,HCC8,HCC10","v23")).not.toBe("HCC17,HCC18");
 });
 
 // cc gaps_RAF
+
 test('Test for CC_GAPS_RAF (CASE 1) ', () => {
 expect(cc_gaps_raf("HCC19,HCC85","HCC17,HCC18,HCC55","v23","CFD")).toBe("-0.441");
 });
@@ -181,12 +187,15 @@ expect(cc_gaps_raf("HCC47,HCC8","HCC12,HCC18")).not.toBe("-1.184");
 });
 
 // CC_GAPS
+
 test('Test for CC_GAP (CASE 1) ', () => {
 expect(cc_gaps("HCC19,HCC85","HCC17,HCC18,HCC55","v23")).toBe("HCC85,HCC85_gDiabetesMellit");
 });
+
 test('Test for CC_GAP (CASE 2) ', () => {
 expect(cc_gaps("HCC19,HCC56","HCC85,HCC55")).toBe("HCC19");
 });
+
 test('Test for CC_GAP (CASE 3) ', () => {
 expect(cc_gaps("HCC18,HCC19","HCC85,HCC55")).not.toBe("HCC1");
 });
@@ -195,9 +204,11 @@ expect(cc_gaps("HCC18,HCC19","HCC85,HCC55")).not.toBe("HCC1");
 test('Test for CC_diff (CASE 1) ', () => {
 expect(cc_diff("HCC19,HCC56","HCC17,HCC18,HCC55","v23")).toBe("adds: HCC17,HCC55, upgraded: HCC19,HCC56, downgraded: , downgraded_to: , deletes: ");
 });
+
 test('Test for CC_diff (CASE 2) ', () => {
 expect(cc_diff("HCC19,HCC56,HCC27,HCC46,HCC86","HCC17,HCC55,HCC28,HCC46,HCC8")).toBe("adds: HCC8,HCC17,HCC55, upgraded: HCC19,HCC56, downgraded: HCC27, downgraded_to: HCC28, deletes: HCC86");
 });
+
 test('Test for CC_diff (CASE 3) ', () => {
 expect(cc_diff("HCC85","HCC8")).not.toBe("adds: HCC85, upgraded: , downgraded: , downgraded_to: , deletes: HCC8");
 });
@@ -215,22 +226,28 @@ expect(cc_diff_raf("HCC85","HCC18","v23","CPD")).not.toBe("0.196");
 
 // cc_INCREMENT_RAF
 test('Test for CC_INCREMENT_RAF (CASE 1) ', () => {
-expect(cc_increment_raf("HCC19,HCC56","HCC17,HCC18,HCC55","v23","CPD")).toBe("0.254");
+expect(cc_increment_raf("HCC19,HCC56","HCC17,HCC18,HCC55","v23","CPD")).toBe("0.201");
 });
+
 test('Test for CC_INCREMENT_RAF (CASE 2) ', () => {
-expect(cc_increment_raf("HCC85","HCC8","v23","CFA")).toBe("2.551");
+expect(cc_increment_raf("HCC85","HCC8","v23","CFA")).toBe("2.654");
 });
 test('Test for CC_INCREMENT_RAF (CASE 3) ', () => {
-expect(cc_increment_raf("HCC85","HCC8","v23","CFA")).not.toBe("1.654");
+expect(cc_increment_raf("HCC85","HCC18","v23","CFA")).not.toBe("1.654");
+});
+test('Test for CC_INCREMENT_RAF (CASE 3) ', () => {
+    expect(cc_increment_raf("HCC85","HCC18","v23","CFA")).not.toBe("1.654");
 });
 
 // cc_INCREMENT
 test('Test for CC_INCREMENT (CASE 1) ', () => {
 expect(cc_increment("HCC19,HCC56","HCC17,HCC18,HCC55","v23","CPD")).toBe("HCC17,HCC55,-HCC19,-HCC56");
 });
+
 test('Test for CC_INCREMENT (CASE 2) ', () => {
 expect(cc_increment("HCC85","HCC8")).toBe("HCC8");
 });
+
 test('Test for CC_INCREMENT (CASE 3) ', () => {
 expect(cc_increment("HCC19,HCC56,HCC27,HCC46,HCC86","HCC17,HCC28,HCC55,HCC8,HCC48")).toBe("HCC8,HCC17,HCC55,-HCC19,-HCC56");
 });
@@ -242,12 +259,14 @@ test('Test for CC_INCREMENT (CASE 4) ', () => {
 });
 
 // cc_raf
+
 test('Test for CC_RAF (CASE 1) ', () => {
 expect(cc_raf("HCC19","v24")).toBe("0.106");
 });
+
 test('Test for CC_RAF (CASE 3) ', () => {
 expect(cc_raf("HCC1","v23")).toBe("0.344");
 });
 test('Test for CC_RAF (CASE 3) ', () => {
 expect(cc_raf("HCC8","v23")).not.toBe("0.251");
-});
+
