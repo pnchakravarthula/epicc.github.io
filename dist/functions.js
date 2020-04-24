@@ -161,7 +161,7 @@ function demo_raf(condition_list) {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var raf_dict = member(condition_list, age, sex, model, orec, ver, baserate);
+  var raf_dict = member(condition_list, age = age, sex = sex, model = model, orec = orec, ver = ver, baserate = baserate);
   var result = raf_dict['raf']['demo_score'];
   result = parseFloat(result);
   result = result.toFixed(3);
@@ -195,7 +195,7 @@ function dx_desc(dx_array) {
 
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   verbose = verbose || default_verbose;
-  var hcc_dict = dx_hccs(temp_dx_array, ver, age, sex, verbose);
+  var hcc_dict = dx_hccs(temp_dx_array, ver = ver, age = age, sex = sex, verbose = verbose);
   var hcc_cust_list = [];
 
   for (var _i = 0, _Object$entries = Object.entries(hcc_dict); _i < _Object$entries.length; _i++) {
@@ -241,7 +241,7 @@ function dx2cc(dx_array) {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   never_trump = never_trump || default_never_trump;
-  var unique_hccs = dx2hcc(temp_dx_array, age, ver, model, sex, disabl, never_trump, verbose);
+  var unique_hccs = dx2hcc(temp_dx_array, age = age, ver = ver, model = model, sex = sex, disabl = disabl, never_trump = never_trump, verbose = verbose);
   return unique_hccs.toString();
 }
 /**
@@ -281,7 +281,7 @@ function dx_raf(dx_array) {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var raf_value = dx2raf(temp_dx_array, age, ver, model, sex, disabl, verbose, never_trump, baserate);
+  var raf_value = dx2raf(temp_dx_array, age = age, ver = ver, model = model, sex = sex, disabl = disabl, verbose = verbose, never_trump = never_trump, baserate = baserate);
   var result = parseFloat(raf_value);
   result = result.toFixed(3);
   return result.toString();
@@ -311,7 +311,7 @@ function clean_dx(dx_array) {
   }
 
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
-  var dx_values = clean_dxlist(temp_dx_array, ver);
+  var dx_values = clean_dxlist(temp_dx_array, ver = ver);
   var dx_set_values = [];
   dx_values.forEach(function (v) {
     return dx_set_values.push(v);
@@ -342,7 +342,7 @@ function clean_cc(cc_array) {
   }
 
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
-  var hcc_values = clean_hcclist(temp_cc_array, ver);
+  var hcc_values = clean_hcclist(temp_cc_array, ver = ver);
   return hcc_values.toString();
 }
 /**
@@ -373,7 +373,7 @@ function cc_desc(cc_array) {
 
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   verbose = verbose || default_verbose;
-  var hcc_dict = hcc_dct(temp_cc_array, ver, age, sex, verbose);
+  var hcc_dict = hcc_dct(temp_cc_array, ver = ver, age = age, sex = sex, verbose = verbose);
   var hcc_cust_list = [];
 
   for (var _i2 = 0, _Object$entries2 = Object.entries(hcc_dict); _i2 < _Object$entries2.length; _i2++) {
@@ -423,7 +423,7 @@ function cc_info(cc) {
 
   var hccmap = default_hccmap[ver];
   temp_hccmap = hccmap[temp_cc];
-  raf_value = hcc2raf(temp_cc, ver, model, disabl, age, never_trump, baserate);
+  raf_value = hcc2raf(temp_cc, ver = ver, model = model, disabl = disabl, age = age, never_trump = never_trump, baserate = baserate);
   raf_value = parseFloat(raf_value);
   raf_value = raf_value.toFixed(3);
   var result = "desc: ".concat(temp_hccmap['desc'], ", children: ").concat(temp_hccmap['children'], ", parents: ").concat(temp_hccmap['parents'], ", RAF: ").concat(raf_value);
@@ -461,7 +461,7 @@ function cc_raf(cc_array) {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var raf_value = hcc2raf(temp_cc_array, ver, model, disabl, age, never_trump, baserate);
+  var raf_value = hcc2raf(temp_cc_array, ver = ver, model = model, disabl = disabl, age = age, never_trump = never_trump, baserate = baserate);
   var result = parseFloat(raf_value);
   result = result.toFixed(3);
   return result.toString();
@@ -496,17 +496,16 @@ function cc_combine(cc_array) {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   never_trump = never_trump || default_never_trump;
-  var hccs = prep_hccs(temp_cc_array, ver, model, age, disabl, never_trump);
+  var hccs = prep_hccs(temp_cc_array, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump);
   return hccs.toString();
 }
-
-module.exports = cc_combine;
 /**
  * Returns the RAF of the net incremental change (+Adds - Upgraded) between cc_lists.  Equivalent of cc_raf(cc_diff_increment)
  * @customfunction
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
  */
+
 
 function cc_increment_raf() {
   var base_cc_array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -550,7 +549,7 @@ function cc_increment_raf() {
   never_trump = never_trump || default_never_trump;
   age = age || 0;
   disabl = disabl || false;
-  var hcc_dict = hcc_increment(temp_base_cc_array, temp_additional_cc_array, ver, model, age, disabl, never_trump, baserate);
+  var hcc_dict = hcc_increment(temp_base_cc_array, temp_additional_cc_array, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump, baserate = baserate);
   var result = hcc_dict['raf'];
   result = parseFloat(result);
   result = result.toFixed(3);
@@ -606,7 +605,7 @@ function cc_increment() {
   never_trump = never_trump || default_never_trump;
   age = age || 0;
   disabl = disabl || false;
-  var hcc_dict = hcc_increment(temp_base_cc_array, temp_additional_cc_array, ver, model, age, disabl, never_trump, baserate);
+  var hcc_dict = hcc_increment(temp_base_cc_array, temp_additional_cc_array, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump, baserate = baserate);
   var neg_arry = hcc_dict['upgraded'].map(function (element) {
     return '-' + element;
   });
@@ -660,7 +659,7 @@ function cc_gaps() {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver, model, age, disabl, baserate);
+  var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
   var result = hcc_dict['Deletes'].concat(hcc_dict['Downgraded']);
   return result.toString();
 }
@@ -711,7 +710,7 @@ function cc_gaps_raf() {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver, model, age, sex, disabl, baserate);
+  var hcc_dict = hcc_gaps(temp_base_cc_array, temp_additional_cc_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
   var result = hcc_dict['raf'];
   result = parseFloat(result);
   result = result.toFixed(3);
@@ -767,7 +766,7 @@ function cc_diff() {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver, age, sex, model, disabl, never_trump, baserate);
+  var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver = ver, age = age, model = model, disabl = disabl, never_trump = never_trump, baserate = baserate);
   var result = "adds: ".concat(cclist['adds'], ", upgraded: ").concat(cclist['upgraded'], ", downgraded: ").concat(cclist['downgraded'], ", downgraded_to: ").concat(cclist['downgrade_to'], ", deletes: ").concat(cclist['deletes']);
   return result;
 }
@@ -821,7 +820,7 @@ function cc_diff_raf() {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver, age, sex, model, disabl, never_trump, baserate);
+  var cclist = hcc_diff(temp_base_cc_array, temp_additional_cc_array, ver = ver, age = age, model = model, disabl = disabl, never_trump = never_trump, baserate = baserate);
   var result = parseFloat(cclist['raf']);
   result = result.toFixed(3);
   return result.toString();
@@ -978,7 +977,7 @@ function dx_increment() {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var dx_dict = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver, model, age, disabl, never_trump, baserate);
+  var dx_dict = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump, baserate = baserate);
   var neg_arry = dx_dict['upgraded'].map(function (element) {
     return '-' + element;
   });
@@ -1034,7 +1033,7 @@ function dx_increment_raf() {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var dx_dict = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver, model, age, disabl, never_trump, baserate);
+  var dx_dict = dx_increments(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump, baserate = baserate);
   var result = dx_dict['raf'];
   var result = parseFloat(result);
   result = result.toFixed(3);
@@ -1088,7 +1087,7 @@ function dx_gap() {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver, model, age, disabl, baserate);
+  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
   var result = dx_dict['Deletes'].concat(dx_dict['Downgraded']);
   return result.toString();
 }
@@ -1140,7 +1139,7 @@ function dx_gap_raf() {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver, model, age, sex, disabl, baserate);
+  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
   var result = dx_dict['raf'];
   var result = parseFloat(result);
   result = result.toFixed(3);
@@ -1164,10 +1163,10 @@ function hcc_gaps() {
   baserate = baserate || default_baserate;
   var new_hccs = prep_hccs(new_list, ver = ver, model = model, age = age, disabl = disabl);
   var old_hccs = prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl);
-  var diff = hcc_diff(old_hccs, new_hccs, ver = ver, model = model, disabl = disabl, baserate = baserate);
-  var cal1 = parseFloat(hcc2raf(diff['deletes'], ver, model, disabl, baserate));
-  var cal2 = parseFloat(hcc2raf(diff['downgraded'], ver, model, disabl, baserate));
-  var cal3 = parseFloat(hcc2raf(diff['downgrade_to'], ver, model, disabl, baserate));
+  var diff = hcc_diff(old_hccs, new_hccs, ver = ver, age = '', model = model, disabl = disabl, never_trump = '', baserate = baserate);
+  var cal1 = parseFloat(hcc2raf(diff['deletes'], ver = '', model = '', disabl = '', age = '', never_trump = '', baserate = ''));
+  var cal2 = parseFloat(hcc2raf(diff['downgraded'], ver = '', model = '', disabl = '', age = '', never_trump = '', baserate = ''));
+  var cal3 = parseFloat(hcc2raf(diff['downgrade_to'], ver = '', model = '', disabl = '', age = '', never_trump = '', baserate = ''));
   var raf = -(cal1 + cal2) + cal3;
   var gaps = {
     "Deletes": diff["deletes"],
@@ -1193,8 +1192,8 @@ function dx_gaps() {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var old_hccs = dx2hcc(old_list, age = age, ver = ver, model = model, disabl = disabl);
-  var new_hccs = dx2hcc(new_list, age = age, ver = ver, model = model, disabl = disabl);
+  var old_hccs = dx2hcc(old_list, age = age, ver = ver, model = model, sex = '', disabl = disabl, never_trump = '', verbose = '');
+  var new_hccs = dx2hcc(new_list, age = age, ver = ver, model = model, sex = '', disabl = disabl, never_trump = '', verbose = '');
   var diff = hcc_gaps(old_hccs, new_hccs, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
   diff['Downgraded'] = Array.from(get_hcc_dx(diff['Downgraded'], clean_dxlist(old_list, ver), ver));
   diff['Deletes'] = Array.from(get_hcc_dx(diff['Deletes'], clean_dxlist(old_list, ver), ver));
@@ -1219,7 +1218,7 @@ function dx2raf(dx_list) {
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var hccs = dx2hcc(dx_list = dx_list, age = age, ver = ver, model = model, sex = sex, disabl = disabl, never_trump = never_trump, verbose = verbose);
-  var raf = get_raf([], hccs, ver = ver, model = model, verbose = verbose, baserate = baserate);
+  var raf = get_raf([], hccs, ver = ver, model = model, verbose = '', baserate = baserate);
   return raf["hcc_score"];
 }
 
@@ -1287,7 +1286,7 @@ function dx_hccs(dx_list) {
   var dxmap = default_dxmap[ver];
   var hccmap = default_hccmap[ver];
   var dx_dct = {};
-  var unique_dx = clean_dxlist(dx_list, ver); // Validate DX against model and pull in DX info  
+  var unique_dx = clean_dxlist(dx_list, ver = ver); // Validate DX against model and pull in DX info  
 
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -1323,7 +1322,7 @@ function dx_hccs(dx_list) {
 
   if (age && sex) {
     // age and sex are optional. w/o them this function can still generically do dx->hcc calcs
-    agesex_edits(dx_dct, age, sex);
+    agesex_edits(dx_dct, age = age, sex = sex);
   } // Find all unique HCCs that are valid in the hcc ver
 
 
@@ -1620,8 +1619,8 @@ function hcc2raf(hcc_list) {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var temp_hcc_list = prep_hccs(hcc_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump);
-  var raf = get_raf([], temp_hcc_list, ver = ver, model = model, baserate = baserate);
+  var temp_hcc_list = prep_hccs(hcc_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = 0);
+  var raf = get_raf([], temp_hcc_list, ver = ver, model = model, verbose = '', baserate = baserate);
   return raf["hcc_score"];
 }
 
@@ -1652,7 +1651,7 @@ function trump_hccs(hcc_list) {
   never_trump = never_trump || default_never_trump;
   var hccmap = default_hccmap[ver]; // Make sure we're getting the right format
 
-  hcc_list_temp = clean_hcclist(hcc_list, ver);
+  hcc_list_temp = clean_hcclist(hcc_list, ver = ver);
 
   if (never_trump == 0) {
     var hcc_set = new Set(hcc_list_temp);
@@ -1728,17 +1727,37 @@ function hcc_dct(hcc_list) {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   verbose = verbose || default_verbose;
   var hccmap = default_hccmap[ver];
-  var unique_hccs = new Set();
+  var unique_hccs = clean_hcclist(hcc_list, ver = ver);
+  var got_trumped = {};
   var _iteratorNormalCompletion9 = true;
   var _didIteratorError9 = false;
   var _iteratorError9 = undefined;
 
   try {
-    for (var _iterator9 = hcc_list[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+    for (var _iterator9 = unique_hccs[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
       var hcc = _step9.value;
+      var _iteratorNormalCompletion11 = true;
+      var _didIteratorError11 = false;
+      var _iteratorError11 = undefined;
 
-      if (hcc in hccmap) {
-        unique_hccs.add(hcc);
+      try {
+        for (var _iterator11 = hccmap[hcc]['children'][Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+          var child = _step11.value;
+          got_trumped[child] = hcc;
+        }
+      } catch (err) {
+        _didIteratorError11 = true;
+        _iteratorError11 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion11 && _iterator11["return"] != null) {
+            _iterator11["return"]();
+          }
+        } finally {
+          if (_didIteratorError11) {
+            throw _iteratorError11;
+          }
+        }
       }
     }
   } catch (err) {
@@ -1756,7 +1775,7 @@ function hcc_dct(hcc_list) {
     }
   }
 
-  var got_trumped = {};
+  var hcc_dct = {};
   var _iteratorNormalCompletion10 = true;
   var _didIteratorError10 = false;
   var _iteratorError10 = undefined;
@@ -1764,53 +1783,6 @@ function hcc_dct(hcc_list) {
   try {
     for (var _iterator10 = unique_hccs[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
       var hcc = _step10.value;
-      var _iteratorNormalCompletion12 = true;
-      var _didIteratorError12 = false;
-      var _iteratorError12 = undefined;
-
-      try {
-        for (var _iterator12 = hccmap[hcc]['children'][Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-          var child = _step12.value;
-          got_trumped[child] = hcc;
-        }
-      } catch (err) {
-        _didIteratorError12 = true;
-        _iteratorError12 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion12 && _iterator12["return"] != null) {
-            _iterator12["return"]();
-          }
-        } finally {
-          if (_didIteratorError12) {
-            throw _iteratorError12;
-          }
-        }
-      }
-    }
-  } catch (err) {
-    _didIteratorError10 = true;
-    _iteratorError10 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion10 && _iterator10["return"] != null) {
-        _iterator10["return"]();
-      }
-    } finally {
-      if (_didIteratorError10) {
-        throw _iteratorError10;
-      }
-    }
-  }
-
-  var hcc_dct = {};
-  var _iteratorNormalCompletion11 = true;
-  var _didIteratorError11 = false;
-  var _iteratorError11 = undefined;
-
-  try {
-    for (var _iterator11 = unique_hccs[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-      var hcc = _step11.value;
 
       if (hccmap.hasOwnProperty(hcc)) {
         hcc_dct[hcc] = JSON.parse(JSON.stringify(hccmap[hcc])); // Get details for this hcc Code
@@ -1825,16 +1797,16 @@ function hcc_dct(hcc_list) {
       }
     }
   } catch (err) {
-    _didIteratorError11 = true;
-    _iteratorError11 = err;
+    _didIteratorError10 = true;
+    _iteratorError10 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion11 && _iterator11["return"] != null) {
-        _iterator11["return"]();
+      if (!_iteratorNormalCompletion10 && _iterator10["return"] != null) {
+        _iterator10["return"]();
       }
     } finally {
-      if (_didIteratorError11) {
-        throw _iteratorError11;
+      if (_didIteratorError10) {
+        throw _iteratorError10;
       }
     }
   }
@@ -1866,10 +1838,10 @@ function hcc_increment() {
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var new_hccs = prep_hccs(new_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump);
-  var old_hccs = prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump);
+  var old_hccs = prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = '');
   new_hccs = new_hccs + ','.concat(old_hccs);
   var final_hccs = prep_hccs(new_hccs, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump);
-  var diff = hcc_diff(old_hccs, final_hccs, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump, baserate = baserate);
+  var diff = hcc_diff(old_hccs, final_hccs, ver = ver, age = '', model = model, disabl = disabl, never_trump = never_trump, baserate = baserate);
   diff["final_hccs"] = final_hccs;
   delete diff['downgraded'];
   delete diff['downgrade_to'];
@@ -1891,8 +1863,8 @@ function dx_increments() {
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || this.default_baserate;
   never_trump = never_trump || this.default_never_trump;
-  var old_hccs = dx2hcc(old_list, age = age, ver = ver, model = model, disabl = disabl, this.never_trump);
-  var new_hccs = dx2hcc(new_list, age = age, ver = ver, model = model, disabl = disabl, this.never_trump);
+  var old_hccs = dx2hcc(old_list, age = age, ver = ver, model = model, sex = '', disabl = disabl, never_trump = never_trump, verbose = '');
+  var new_hccs = dx2hcc(new_list, age = age, ver = ver, model = model, sex = '', disabl = disabl, never_trump = never_trump, verbose = '');
   var diff = hcc_increment(old_hccs, new_hccs, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump, baserate = baserate);
   var dxinc = {
     "adds": Array.from(get_hcc_dx(diff['adds'], clean_dxlist(new_list, ver), ver)),
@@ -1908,13 +1880,13 @@ function get_hcc_dx(hcc_list, dx_list, ver) {
   var dxmap = default_dxmap[ver];
   var hcc_set = new Set(hcc_list);
   var mydx = new Set();
-  var _iteratorNormalCompletion13 = true;
-  var _didIteratorError13 = false;
-  var _iteratorError13 = undefined;
+  var _iteratorNormalCompletion12 = true;
+  var _didIteratorError12 = false;
+  var _iteratorError12 = undefined;
 
   try {
-    for (var _iterator13 = dx_list[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-      var dx = _step13.value;
+    for (var _iterator12 = dx_list[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+      var dx = _step12.value;
       var temp_set = new Set(dxmap[dx]['hccs']);
 
       var temp = _toConsumableArray(temp_set).filter(function (x) {
@@ -1924,19 +1896,18 @@ function get_hcc_dx(hcc_list, dx_list, ver) {
       if (dxmap.hasOwnProperty(dx) && temp.length) {
         mydx.add(dx);
       }
-    } // mydx = {dx for dx in dx_list if dx in dxmap and dxmap[dx]['hccs'].intersection(hcc_set)}
-
+    }
   } catch (err) {
-    _didIteratorError13 = true;
-    _iteratorError13 = err;
+    _didIteratorError12 = true;
+    _iteratorError12 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion13 && _iterator13["return"] != null) {
-        _iterator13["return"]();
+      if (!_iteratorNormalCompletion12 && _iterator12["return"] != null) {
+        _iterator12["return"]();
       }
     } finally {
-      if (_didIteratorError13) {
-        throw _iteratorError13;
+      if (_didIteratorError12) {
+        throw _iteratorError12;
       }
     }
   }
@@ -1961,9 +1932,9 @@ function dx_diff() {
   never_trump = never_trump || default_never_trump;
   var old_dx = clean_dxlist(old_list, ver);
   var new_dx = clean_dxlist(new_list, ver);
-  var old_hccs = dx2hcc(old_list, age = '', ver = ver, model = model, sex = '', disab = '', never_trump = never_trump, verbose = '');
-  var new_hccs = dx2hcc(new_list, age = '', ver = ver, model = model, sex = '', disab = '', never_trump = never_trump, verbose = '');
-  var diff = hcc_diff(old_hccs, new_hccs, ver = ver, model = model, never_trump = never_trump, baserate = baserate);
+  var old_hccs = dx2hcc(old_list, age = '', ver = ver, model = model, sex = '', disabl = '', never_trump = never_trump, verbose = '');
+  var new_hccs = dx2hcc(new_list, age = '', ver = ver, model = model, sex = '', disabl = '', never_trump = never_trump, verbose = '');
+  var diff = hcc_diff(old_hccs, new_hccs, ver = ver, age = '', model = model, disabl = '', never_trump = never_trump, baserate = baserate);
   var dxdiff = {
     "adds": Array.from(get_hcc_dx(diff['adds'], new_dx, ver)),
     "upgraded": Array.from(get_hcc_dx(diff["upgraded"], old_dx, ver)),
@@ -1999,29 +1970,78 @@ function hcc_diff() {
   never_trump = never_trump || default_never_trump;
   var hccmap = default_hccmap[ver]; // Prep cleans and trumps the list and add interactions
 
-  var old_set = new Set(prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump));
+  var old_set = new Set(prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = ''));
   var new_set = new Set(prep_hccs(new_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump)); // Find the full set of codes that each set can trump
 
   var old_children = new Set();
   var new_children = new Set();
   var new_parents = new Set();
+  var _iteratorNormalCompletion13 = true;
+  var _didIteratorError13 = false;
+  var _iteratorError13 = undefined;
+
+  try {
+    for (var _iterator13 = old_set[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+      var hcc1 = _step13.value;
+
+      if (hcc1 in hccmap) {
+        var _iteratorNormalCompletion16 = true;
+        var _didIteratorError16 = false;
+        var _iteratorError16 = undefined;
+
+        try {
+          for (var _iterator16 = hccmap[hcc1]['children'][Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
+            var child = _step16.value;
+            old_children.add(child);
+          }
+        } catch (err) {
+          _didIteratorError16 = true;
+          _iteratorError16 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion16 && _iterator16["return"] != null) {
+              _iterator16["return"]();
+            }
+          } finally {
+            if (_didIteratorError16) {
+              throw _iteratorError16;
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    _didIteratorError13 = true;
+    _iteratorError13 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion13 && _iterator13["return"] != null) {
+        _iterator13["return"]();
+      }
+    } finally {
+      if (_didIteratorError13) {
+        throw _iteratorError13;
+      }
+    }
+  }
+
   var _iteratorNormalCompletion14 = true;
   var _didIteratorError14 = false;
   var _iteratorError14 = undefined;
 
   try {
-    for (var _iterator14 = old_set[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
-      var hcc1 = _step14.value;
+    for (var _iterator14 = new_set[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+      var hcc2 = _step14.value;
 
-      if (hcc1 in hccmap) {
+      if (hcc2 in hccmap) {
         var _iteratorNormalCompletion17 = true;
         var _didIteratorError17 = false;
         var _iteratorError17 = undefined;
 
         try {
-          for (var _iterator17 = hccmap[hcc1]['children'][Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
+          for (var _iterator17 = hccmap[hcc2]['children'][Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
             var child = _step17.value;
-            old_children.add(child);
+            new_children.add(child);
           }
         } catch (err) {
           _didIteratorError17 = true;
@@ -2060,17 +2080,17 @@ function hcc_diff() {
 
   try {
     for (var _iterator15 = new_set[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
-      var hcc2 = _step15.value;
+      var hcc3 = _step15.value;
 
-      if (hcc2 in hccmap) {
+      if (hcc3 in hccmap) {
         var _iteratorNormalCompletion18 = true;
         var _didIteratorError18 = false;
         var _iteratorError18 = undefined;
 
         try {
-          for (var _iterator18 = hccmap[hcc2]['children'][Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
+          for (var _iterator18 = hccmap[hcc3]['parents'][Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
             var child = _step18.value;
-            new_children.add(child);
+            new_parents.add(child);
           }
         } catch (err) {
           _didIteratorError18 = true;
@@ -2087,7 +2107,8 @@ function hcc_diff() {
           }
         }
       }
-    }
+    } // New HCCs, except where they are trumped by old HCCs (downgrades)
+
   } catch (err) {
     _didIteratorError15 = true;
     _iteratorError15 = err;
@@ -2099,56 +2120,6 @@ function hcc_diff() {
     } finally {
       if (_didIteratorError15) {
         throw _iteratorError15;
-      }
-    }
-  }
-
-  var _iteratorNormalCompletion16 = true;
-  var _didIteratorError16 = false;
-  var _iteratorError16 = undefined;
-
-  try {
-    for (var _iterator16 = new_set[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
-      var hcc3 = _step16.value;
-
-      if (hcc3 in hccmap) {
-        var _iteratorNormalCompletion19 = true;
-        var _didIteratorError19 = false;
-        var _iteratorError19 = undefined;
-
-        try {
-          for (var _iterator19 = hccmap[hcc3]['parents'][Symbol.iterator](), _step19; !(_iteratorNormalCompletion19 = (_step19 = _iterator19.next()).done); _iteratorNormalCompletion19 = true) {
-            var child = _step19.value;
-            new_parents.add(child);
-          }
-        } catch (err) {
-          _didIteratorError19 = true;
-          _iteratorError19 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion19 && _iterator19["return"] != null) {
-              _iterator19["return"]();
-            }
-          } finally {
-            if (_didIteratorError19) {
-              throw _iteratorError19;
-            }
-          }
-        }
-      }
-    } // New HCCs, except where they are trumped by old HCCs (downgrades)
-
-  } catch (err) {
-    _didIteratorError16 = true;
-    _iteratorError16 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion16 && _iterator16["return"] != null) {
-        _iterator16["return"]();
-      }
-    } finally {
-      if (_didIteratorError16) {
-        throw _iteratorError16;
       }
     }
   }
@@ -2174,7 +2145,7 @@ function hcc_diff() {
   var upgraded = new Set();
 
   if (never_trump === 1) {
-    var prep_hccs_set = new Set(prep_hccs(Array.from(new_set), ver = ver, model = model, age = age, disabl = disabl));
+    var prep_hccs_set = new Set(prep_hccs(Array.from(new_set), ver = ver, model = model, age = age, disabl = disabl, never_trump = ''));
     var upgraded_temp = new Set(_toConsumableArray(old_set).filter(function (x) {
       return !prep_hccs_set.has(x);
     }));
@@ -2197,8 +2168,8 @@ function hcc_diff() {
   var del_hccs = new Set(_toConsumableArray(del_hccs_temp).filter(function (x) {
     return !del_hccs_union.has(x);
   }));
-  var old_raf = hcc2raf(Array.from(old_set), ver = ver, model = model, baserate = baserate, never_trump = never_trump);
-  var new_raf = hcc2raf(Array.from(new_set), ver = ver, model = model, baserate = baserate, never_trump = never_trump);
+  var old_raf = hcc2raf(Array.from(old_set), ver = ver, model = model, disabl = '', age = '', never_trump = never_trump, baserate = baserate);
+  var new_raf = hcc2raf(Array.from(new_set), ver = ver, model = model, disabl = '', age = '', never_trump = never_trump, baserate = baserate);
   var delta_raf = new_raf - old_raf;
   var premium = (delta_raf * baserate).toFixed(2);
   var diff = {
@@ -2246,7 +2217,7 @@ function member(condition_list) {
                       "1": Disability (DIB)
                       "2": End Stage Renal Disease (ESRD)
                       "3": Both DIB and ESRD
-       :param ver: str
+        :param ver: str
                   Version of HCC Model to be used (overrides default version set in Ccalc).
                   Accepts {'v22', 'v23', 'v24'}
       :return: dict
@@ -2261,7 +2232,7 @@ function member(condition_list) {
   var disabl = model.endsWith("D");
   var demo_codes = agesex(age, sex, orec, model); // Condition resolver to get the condition list as either Dx or HCC
 
-  var cond_dict = condition_resolver(condition_list, ver = ver, model = model);
+  var cond_dict = condition_resolver(condition_list, ver = ver, model = model, never_trump = '', allhcc = '');
   var condition = cond_dict['condition'];
   var allhcc = cond_dict['allhcc'];
   var flag;
@@ -2270,19 +2241,19 @@ function member(condition_list) {
 
   if (allhcc == 1) {
     var dx_dct = hcc_dct(condition, ver = ver, age = age, sex = sex, verbose = verbose);
-    var unique_hccs = prep_hccs(condition, ver = ver, model = model, age = age);
+    var unique_hccs = prep_hccs(condition, ver = ver, model = model, age = age, disabl = '', never_trump = '');
     unique_hccs = interactions[ver](unique_hccs, model, disabl, age);
-    raf = get_raf(demo_codes, unique_hccs, ver = ver, model = model, baserate = baserate);
+    raf = get_raf(demo_codes, unique_hccs, ver = ver, model = model, verbose = '', baserate = baserate);
     flag = 'hcc';
     var dx_hcc = []; // Update the dictionary with interaction codes and desc as Interaction Codes
 
-    var _iteratorNormalCompletion20 = true;
-    var _didIteratorError20 = false;
-    var _iteratorError20 = undefined;
+    var _iteratorNormalCompletion19 = true;
+    var _didIteratorError19 = false;
+    var _iteratorError19 = undefined;
 
     try {
-      for (var _iterator20 = unique_hccs[Symbol.iterator](), _step20; !(_iteratorNormalCompletion20 = (_step20 = _iterator20.next()).done); _iteratorNormalCompletion20 = true) {
-        var hcc = _step20.value;
+      for (var _iterator19 = unique_hccs[Symbol.iterator](), _step19; !(_iteratorNormalCompletion19 = (_step19 = _iterator19.next()).done); _iteratorNormalCompletion19 = true) {
+        var hcc = _step19.value;
 
         if (!(hcc in dx_dct)) {
           dx_dct.set(hcc, "{'desc': 'Interaction Codes'}");
@@ -2290,16 +2261,16 @@ function member(condition_list) {
       } // Appending dictionary to the json format
 
     } catch (err) {
-      _didIteratorError20 = true;
-      _iteratorError20 = err;
+      _didIteratorError19 = true;
+      _iteratorError19 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion20 && _iterator20["return"] != null) {
-          _iterator20["return"]();
+        if (!_iteratorNormalCompletion19 && _iterator19["return"] != null) {
+          _iterator19["return"]();
         }
       } finally {
-        if (_didIteratorError20) {
-          throw _iteratorError20;
+        if (_didIteratorError19) {
+          throw _iteratorError19;
         }
       }
     }
@@ -2316,10 +2287,10 @@ function member(condition_list) {
     }
   } else {
     // process DX list
-    dx_dct = dx_hccs(condition, ver, age, sex, verbose);
-    var unique_hccs = dxdct_hccs(dx_dct);
+    dx_dct = dx_hccs(condition, ver = ver, age = age, sex = sex, verbose = verbose);
+    var unique_hccs = dxdct_hccs(dx_dct, never_trump = '');
     unique_hccs = interactions[ver](unique_hccs, model, disabl, age);
-    raf = get_raf(demo_codes, unique_hccs, ver, model, verbose, baserate);
+    raf = get_raf(demo_codes, unique_hccs, ver = ver, model = model, verbose = '', baserate = baserate);
     flag = 'dx';
     dx_hcc = []; // Appending dictionary to the json format
 
@@ -2334,13 +2305,13 @@ function member(condition_list) {
     } // Appending interaction codes to the dictionary
 
 
-    var _iteratorNormalCompletion21 = true;
-    var _didIteratorError21 = false;
-    var _iteratorError21 = undefined;
+    var _iteratorNormalCompletion20 = true;
+    var _didIteratorError20 = false;
+    var _iteratorError20 = undefined;
 
     try {
-      for (var _iterator21 = unique_hccs[Symbol.iterator](), _step21; !(_iteratorNormalCompletion21 = (_step21 = _iterator21.next()).done); _iteratorNormalCompletion21 = true) {
-        var hcc = _step21.value;
+      for (var _iterator20 = unique_hccs[Symbol.iterator](), _step20; !(_iteratorNormalCompletion20 = (_step20 = _iterator20.next()).done); _iteratorNormalCompletion20 = true) {
+        var hcc = _step20.value;
 
         if (!(hcc in hccmap)) {
           var dic_dxlist = {};
@@ -2360,16 +2331,16 @@ function member(condition_list) {
         }
       }
     } catch (err) {
-      _didIteratorError21 = true;
-      _iteratorError21 = err;
+      _didIteratorError20 = true;
+      _iteratorError20 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion21 && _iterator21["return"] != null) {
-          _iterator21["return"]();
+        if (!_iteratorNormalCompletion20 && _iterator20["return"] != null) {
+          _iterator20["return"]();
         }
       } finally {
-        if (_didIteratorError21) {
-          throw _iteratorError21;
+        if (_didIteratorError20) {
+          throw _iteratorError20;
         }
       }
     }
@@ -2451,7 +2422,7 @@ function condition_resolver(conditionlist) {
       return !list_hcc.includes(item);
     });
     list_dx_clean = clean_dxlist(list_dx, ver);
-    var hccs = dx2hcc(list_dx_clean, ver = ver, model = model, never_trump = never_trump);
+    var hccs = dx2hcc(list_dx_clean, age = '', ver = ver, model = model, sex = '', disabl = '', never_trump = never_trump, verbose = '');
     var combined_hccs = list_hcc.concat(hccs);
     dct = {
       'allhcc': allhcc,
@@ -2610,13 +2581,13 @@ function get_raf(demo_lst, hcc_lst) {
   var hcc_detail = {};
   var demo_raf = 0.0;
   var hcc_raf = 0.0;
-  var _iteratorNormalCompletion22 = true;
-  var _didIteratorError22 = false;
-  var _iteratorError22 = undefined;
+  var _iteratorNormalCompletion21 = true;
+  var _didIteratorError21 = false;
+  var _iteratorError21 = undefined;
 
   try {
-    for (var _iterator22 = demo_lst[Symbol.iterator](), _step22; !(_iteratorNormalCompletion22 = (_step22 = _iterator22.next()).done); _iteratorNormalCompletion22 = true) {
-      var demo = _step22.value;
+    for (var _iterator21 = demo_lst[Symbol.iterator](), _step21; !(_iteratorNormalCompletion21 = (_step21 = _iterator21.next()).done); _iteratorNormalCompletion21 = true) {
+      var demo = _step21.value;
 
       if (hcccoefn.hasOwnProperty(demo)) {
         demo_detail[demo] = hcccoefn[demo];
@@ -2624,16 +2595,16 @@ function get_raf(demo_lst, hcc_lst) {
       }
     }
   } catch (err) {
-    _didIteratorError22 = true;
-    _iteratorError22 = err;
+    _didIteratorError21 = true;
+    _iteratorError21 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion22 && _iterator22["return"] != null) {
-        _iterator22["return"]();
+      if (!_iteratorNormalCompletion21 && _iterator21["return"] != null) {
+        _iterator21["return"]();
       }
     } finally {
-      if (_didIteratorError22) {
-        throw _iteratorError22;
+      if (_didIteratorError21) {
+        throw _iteratorError21;
       }
     }
   }
@@ -2723,15 +2694,15 @@ function agesex(age, sex, orec, model) {
     age_upper_bounds.push(split[1]);
   }
 
-  var _iteratorNormalCompletion23 = true;
-  var _didIteratorError23 = false;
-  var _iteratorError23 = undefined;
+  var _iteratorNormalCompletion22 = true;
+  var _didIteratorError22 = false;
+  var _iteratorError22 = undefined;
 
   try {
-    for (var _iterator23 = age_lower_bounds.entries()[Symbol.iterator](), _step23; !(_iteratorNormalCompletion23 = (_step23 = _iterator23.next()).done); _iteratorNormalCompletion23 = true) {
-      var _step23$value = _slicedToArray(_step23.value, 2),
-          _i4 = _step23$value[0],
-          lower_bound = _step23$value[1];
+    for (var _iterator22 = age_lower_bounds.entries()[Symbol.iterator](), _step22; !(_iteratorNormalCompletion22 = (_step22 = _iterator22.next()).done); _iteratorNormalCompletion22 = true) {
+      var _step22$value = _slicedToArray(_step22.value, 2),
+          _i4 = _step22$value[0],
+          lower_bound = _step22$value[1];
 
       if (_i4 == age_lower_bounds[age_lower_bounds.length] - 1) {
         demo_str += age_labels[_i4];
@@ -2744,16 +2715,16 @@ function agesex(age, sex, orec, model) {
       }
     }
   } catch (err) {
-    _didIteratorError23 = true;
-    _iteratorError23 = err;
+    _didIteratorError22 = true;
+    _iteratorError22 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion23 && _iterator23["return"] != null) {
-        _iterator23["return"]();
+      if (!_iteratorNormalCompletion22 && _iterator22["return"] != null) {
+        _iterator22["return"]();
       }
     } finally {
-      if (_didIteratorError23) {
-        throw _iteratorError23;
+      if (_didIteratorError22) {
+        throw _iteratorError22;
       }
     }
   }
