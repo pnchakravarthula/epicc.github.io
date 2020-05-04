@@ -754,9 +754,9 @@ function hcc_gaps(old_list=[], new_list=[], ver='', model='', age=0, disabl=fals
   var old_hccs = prep_hccs(old_list, ver=ver, model=model, age=age, disabl=disabl);
 
   var diff = hcc_diff(old_hccs, new_hccs, ver=ver, age='', model=model, disabl=disabl, never_trump='', baserate=baserate);
-  var cal1 = parseFloat(hcc2raf(diff['deletes'], ver='', model='', disabl='', age='', never_trump='', baserate=''));
-  var cal2 = parseFloat(hcc2raf(diff['downgraded'], ver='', model='', disabl='', age='', never_trump='', baserate=''));
-  var cal3 = parseFloat(hcc2raf(diff['downgrade_to'], ver='', model='', disabl='', age='', never_trump='', baserate=''));
+  var cal1 = parseFloat(hcc2raf(diff['deletes'], ver=ver, model=model, disabl=disabl, age=age));
+  var cal2 = parseFloat(hcc2raf(diff['downgraded'], ver=ver, model=model, disabl=disabl, age=age));
+  var cal3 = parseFloat(hcc2raf(diff['downgrade_to'], ver=ver, model=model, disabl=disabl, age=age));
   var raf = -(cal1+cal2)+cal3;
   var gaps = { "Deletes": diff["deletes"], "Downgraded": diff["downgraded"], "raf": raf, "premium": Math.round(raf * baserate, 2) };
   return gaps;
@@ -1104,7 +1104,7 @@ function hcc_increment(old_list=[], new_list=[], ver='', model='', age=0, disabl
   never_trump = never_trump || default_never_trump;
 
   var new_hccs = prep_hccs(new_list, ver=ver, model=model, age=age, disabl=disabl, never_trump=never_trump)
-  var old_hccs = prep_hccs(old_list, ver=ver, model=model, age=age, disabl=disabl, never_trump='')
+  var old_hccs = prep_hccs(old_list, ver=ver, model=model, age=age, disabl=disabl)
   new_hccs = new_hccs + ','.concat(old_hccs)
   var final_hccs = prep_hccs(new_hccs, ver=ver, model=model, age=age, disabl=disabl, never_trump=never_trump)
   var diff = hcc_diff(old_hccs, final_hccs, ver=ver, age='', model=model, disabl=disabl, never_trump=never_trump, baserate=baserate)
@@ -1192,7 +1192,7 @@ function hcc_diff(old_list=[], new_list=[], ver='', age=0, model='', disabl=fals
   
   var hccmap = default_hccmap[ver];
   // Prep cleans and trumps the list and add interactions
-  var old_set = new Set(prep_hccs(old_list, ver=ver, model=model, age=age, disabl=disabl, never_trump=''));
+  var old_set = new Set(prep_hccs(old_list, ver=ver, model=model, age=age, disabl=disabl));
   var new_set = new Set(prep_hccs(new_list, ver=ver, model=model, age=age, disabl=disabl, never_trump=never_trump));
 
   // Find the full set of codes that each set can trump
@@ -1701,13 +1701,13 @@ function agesex(age, sex, orec, model) {
       age_upper_bounds.push(split[1]);
   }
 
-  for (const [i, lower_bound] of age_lower_bounds.entries()) {
-      if (i == age_lower_bounds[age_lower_bounds.length] - 1) {
-          demo_str += age_labels[i];
+  for (var [index, lower_bound] of age_lower_bounds.entries()) {
+      if (index == age_lower_bounds[age_lower_bounds.length] - 1) {
+          demo_str += age_labels[index];
           break;
       }
-      if ((lower_bound >= age) && (lower_bound < age_lower_bounds[i + 1])) {
-          demo_str += age_labels[i];
+      if ((lower_bound <= age) && (age < age_lower_bounds[index + 1])) {
+          demo_str += age_labels[index];
           break;
       }
   }
@@ -1908,7 +1908,7 @@ function v22_interactions(ccs, model, disabl=false, age='') {
     }
   }
 
-  if (disabl === true) {
+  if (disabl === true || disabl == 1) {
       int_hccs["DISABLED_HCC85"] = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
       if ("PRESSURE_ULCER" in int_hccs) {
         int_hccs["DISABLED_PRESSURE_ULCER"] = int_hccs["PRESSURE_ULCER"];
@@ -2086,7 +2086,7 @@ function v23_interactions(ccs, model, disabl=false, age='') {
     }
   }
 
-  if (disabl === true) {
+  if (disabl === true || disabl == 1) {
       int_hccs["DISABLED_HCC85"] = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
       if ("PRESSURE_ULCER" in int_hccs) {
         int_hccs["DISABLED_PRESSURE_ULCER"] = int_hccs["PRESSURE_ULCER"];
@@ -2259,7 +2259,7 @@ function v24_interactions(ccs, model, disabl=false, age='') {
     }
   }
 
-  if (disabl == true) {
+  if (disabl == true || disabl == 1) {
       int_hccs["DISABLED_HCC85"] = new Set([...new Set(["HCC85"])].filter(x => cc_set.has(x)));
       if ("PRESSURE_ULCER" in int_hccs) {
         int_hccs["DISABLED_PRESSURE_ULCER"] = int_hccs["PRESSURE_ULCER"];
