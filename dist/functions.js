@@ -1164,9 +1164,9 @@ function hcc_gaps() {
   var new_hccs = prep_hccs(new_list, ver = ver, model = model, age = age, disabl = disabl);
   var old_hccs = prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl);
   var diff = hcc_diff(old_hccs, new_hccs, ver = ver, age = '', model = model, disabl = disabl, never_trump = '', baserate = baserate);
-  var cal1 = parseFloat(hcc2raf(diff['deletes'], ver = '', model = '', disabl = '', age = '', never_trump = '', baserate = ''));
-  var cal2 = parseFloat(hcc2raf(diff['downgraded'], ver = '', model = '', disabl = '', age = '', never_trump = '', baserate = ''));
-  var cal3 = parseFloat(hcc2raf(diff['downgrade_to'], ver = '', model = '', disabl = '', age = '', never_trump = '', baserate = ''));
+  var cal1 = parseFloat(hcc2raf(diff['deletes'], ver = ver, model = model, disabl = disabl, age = age));
+  var cal2 = parseFloat(hcc2raf(diff['downgraded'], ver = ver, model = model, disabl = disabl, age = age));
+  var cal3 = parseFloat(hcc2raf(diff['downgrade_to'], ver = ver, model = model, disabl = disabl, age = age));
   var raf = -(cal1 + cal2) + cal3;
   var gaps = {
     "Deletes": diff["deletes"],
@@ -1838,7 +1838,7 @@ function hcc_increment() {
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
   var new_hccs = prep_hccs(new_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump);
-  var old_hccs = prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = '');
+  var old_hccs = prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl);
   new_hccs = new_hccs + ','.concat(old_hccs);
   var final_hccs = prep_hccs(new_hccs, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump);
   var diff = hcc_diff(old_hccs, final_hccs, ver = ver, age = '', model = model, disabl = disabl, never_trump = never_trump, baserate = baserate);
@@ -1970,7 +1970,7 @@ function hcc_diff() {
   never_trump = never_trump || default_never_trump;
   var hccmap = default_hccmap[ver]; // Prep cleans and trumps the list and add interactions
 
-  var old_set = new Set(prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = ''));
+  var old_set = new Set(prep_hccs(old_list, ver = ver, model = model, age = age, disabl = disabl));
   var new_set = new Set(prep_hccs(new_list, ver = ver, model = model, age = age, disabl = disabl, never_trump = never_trump)); // Find the full set of codes that each set can trump
 
   var old_children = new Set();
@@ -2701,16 +2701,16 @@ function agesex(age, sex, orec, model) {
   try {
     for (var _iterator22 = age_lower_bounds.entries()[Symbol.iterator](), _step22; !(_iteratorNormalCompletion22 = (_step22 = _iterator22.next()).done); _iteratorNormalCompletion22 = true) {
       var _step22$value = _slicedToArray(_step22.value, 2),
-          _i4 = _step22$value[0],
+          index = _step22$value[0],
           lower_bound = _step22$value[1];
 
-      if (_i4 == age_lower_bounds[age_lower_bounds.length] - 1) {
-        demo_str += age_labels[_i4];
+      if (index == age_lower_bounds[age_lower_bounds.length] - 1) {
+        demo_str += age_labels[index];
         break;
       }
 
-      if (lower_bound >= age && lower_bound < age_lower_bounds[_i4 + 1]) {
-        demo_str += age_labels[_i4];
+      if (lower_bound <= age && age < age_lower_bounds[index + 1]) {
+        demo_str += age_labels[index];
         break;
       }
     }
@@ -2951,7 +2951,7 @@ function v22_interactions(ccs, model) {
     }
   }
 
-  if (disabl === true) {
+  if (disabl === true || disabl == 1) {
     int_hccs["DISABLED_HCC85"] = new Set(_toConsumableArray(new Set(["HCC85"])).filter(function (x) {
       return cc_set.has(x);
     }));
@@ -3178,7 +3178,7 @@ function v23_interactions(ccs, model) {
     }
   }
 
-  if (disabl === true) {
+  if (disabl === true || disabl == 1) {
     int_hccs["DISABLED_HCC85"] = new Set(_toConsumableArray(new Set(["HCC85"])).filter(function (x) {
       return cc_set.has(x);
     }));
@@ -3398,7 +3398,7 @@ function v24_interactions(ccs, model) {
     }
   }
 
-  if (disabl == true) {
+  if (disabl == true || disabl == 1) {
     int_hccs["DISABLED_HCC85"] = new Set(_toConsumableArray(new Set(["HCC85"])).filter(function (x) {
       return cc_set.has(x);
     }));
