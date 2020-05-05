@@ -45,7 +45,7 @@
             "result": {}
         },
         {
-            "description": "Returns comma-separated list of descriptions of each DX Code from CMS crosswalk.",
+            "description": "Returns comma-separated list of descriptions of each DX Code from CMS crosswalk",
             "id": "DX_DESC",
             "name": "DX_DESC",
             "parameters": [
@@ -220,7 +220,7 @@
             "result": {}
         },
         {
-            "description": "Returns comma-separated list of descriptions of each HCC Code from CMS crosswalk.",
+            "description": "Returns comma-separated list of descriptions of each HCC Code from CMS crosswalk",
             "id": "CC_DESC",
             "name": "CC_DESC",
             "parameters": [
@@ -254,7 +254,7 @@
             "result": {}
         },
         {
-            "description": "Returns multi-line info block for an HCC: Description, Children, Parents, RAF.  Past MVP can also feed a info pane / popup for desktop calculator like use.\nTo enable screen reader support, press Ctrl+Alt+Z To learn about keyboard shortcuts, press Ctrl+slash",
+            "description": "Returns multi-line info block for an HCC: Description, Children, Parents, RAF",
             "id": "CC_INFO",
             "name": "CC_INFO",
             "parameters": [
@@ -342,7 +342,7 @@
             "result": {}
         },
         {
-            "description": "cc_combine",
+            "description": "Returns a list of ccs after combining them and applying trumping/interaction logic",
             "id": "CC_COMBINE",
             "name": "CC_COMBINE",
             "parameters": [
@@ -485,9 +485,9 @@
             "result": {}
         },
         {
-            "description": "Special case of diff_deletes that focuses on YoY Chronic Gaps and downgrades.  Maybe does some adjusting for differing coding models yoy, but that sounds hard",
-            "id": "CC_GAPS",
-            "name": "CC_GAPS",
+            "description": "Compares a base list of ccs and additional ccs and returns a list of ccs that are deletes or downgrades between the additional codes vs the baseline",
+            "id": "CC_GAP",
+            "name": "CC_GAP",
             "parameters": [
                 {
                     "description": "accepts array of cc codes",
@@ -537,9 +537,9 @@
             "result": {}
         },
         {
-            "description": "Special case of diff_deletes_raf that focuses on YoY Chronic Gaps and downgrades (net raf of downgraded).  Equivalent of cc_chronic(cc_diff_deletes). Maybe does some adjusting for differing coding models yoy, but that sounds hard",
-            "id": "CC_GAPS_RAF",
-            "name": "CC_GAPS_RAF",
+            "description": "Compares a base list of ccs and additional ccs and returns raf of ccs that are deletes or downgrades between the additional codes vs the baseline",
+            "id": "CC_GAP_RAF",
+            "name": "CC_GAP_RAF",
             "parameters": [
                 {
                     "description": "accepts array of cc codes",
@@ -589,7 +589,7 @@
             "result": {}
         },
         {
-            "description": "Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: \"Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:'",
+            "description": "Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: \"Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:\"",
             "id": "CC_DIFF",
             "name": "CC_DIFF",
             "parameters": [
@@ -646,7 +646,7 @@
             "result": {}
         },
         {
-            "description": "Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: \"Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:'",
+            "description": "Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: \"Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:\"",
             "id": "CC_DIFF_RAF",
             "name": "CC_DIFF_RAF",
             "parameters": [
@@ -703,9 +703,9 @@
             "result": {}
         },
         {
-            "description": "dx_diffc",
-            "id": "DX_DIFFC",
-            "name": "DX_DIFFC",
+            "description": "Compares a base list of dx and additional dx and returns an information block on the differences ; eg: \"Adds: E119,  I2720; Deletes: I495; Upgraded: F10250; Downgraded:\"",
+            "id": "DX_DIFF",
+            "name": "DX_DIFF",
             "parameters": [
                 {
                     "description": "accepts array of dx codes",
@@ -745,9 +745,9 @@
             "result": {}
         },
         {
-            "description": "dx_diffc_raf",
-            "id": "DX_DIFFC_RAF",
-            "name": "DX_DIFFC_RAF",
+            "description": "Returns net raf difference between baseline ccs and additional ccs",
+            "id": "DX_DIFF_RAF",
+            "name": "DX_DIFF_RAF",
             "parameters": [
                 {
                     "description": "accepts array of dx codes",
@@ -891,7 +891,7 @@
             "result": {}
         },
         {
-            "description": "Special case of diff_deletes that focuses on YoY Chronic Gaps and downgrades.",
+            "description": "Compares a base list of dxs and additional dxs and returns a list of dxs that are deletes or downgrades between the additional codes vs the baseline",
             "id": "DX_GAP",
             "name": "DX_GAP",
             "parameters": [
@@ -943,7 +943,7 @@
             "result": {}
         },
         {
-            "description": "Special case of diff_deletes_raf that focuses on YoY Chronic Gaps and downgrades (net raf of downgraded).  Equivalent of dx_chronic(dx_diff_deletes). Maybe does some adjusting for differing coding models yoy, but that sounds hard",
+            "description": "dx_diff_deletes_raf focuses on YoY Chronic Gaps and downgrades (net raf of downgraded).  Equivalent of dx_chronic(dx_diff_deletes).",
             "id": "DX_GAP_RAF",
             "name": "DX_GAP_RAF",
             "parameters": [
