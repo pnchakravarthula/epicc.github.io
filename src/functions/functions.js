@@ -42,7 +42,7 @@ function demo_raf(condition_list, age=65, sex='M', model='', orec='0', ver='', b
 }
 
 /**
- * Returns comma-separated list of descriptions of each DX Code from CMS crosswalk.
+ * Returns comma-separated list of descriptions of each DX Code from CMS crosswalk
  * @customfunction
  * @param {string[][]} dx_array accepts array of hcc codes
  */
@@ -168,7 +168,7 @@ function clean_cc(cc_array, ver='') {
 }
 
 /**
- * Returns comma-separated list of descriptions of each HCC Code from CMS crosswalk.
+ * Returns comma-separated list of descriptions of each HCC Code from CMS crosswalk
  * @customfunction
  * @param {string[][]} cc_array accepts array of hcc codes
  */
@@ -195,8 +195,7 @@ function cc_desc(cc_array, ver='', age=0, sex='', verbose=false) {
 }
 
 /**
- * Returns multi-line info block for an HCC: Description, Children, Parents, RAF.  Past MVP can also feed a info pane / popup for desktop calculator like use.
-To enable screen reader support, press Ctrl+Alt+Z To learn about keyboard shortcuts, press Ctrl+slash
+ * Returns multi-line info block for an HCC: Description, Children, Parents, RAF
  * @customfunction
  * @param {string[][]} cc accepts array of hcc codes
  */
@@ -252,7 +251,7 @@ function cc_raf(cc_array, ver='', model='', disabl=false, age=0, never_trump=0, 
 }
 
 /**
- * cc_combine
+ * Returns a list of ccs after combining them and applying trumping/interaction logic
  * @customfunction
  * @param {string[][]} cc_array accepts array of hcc codes
  */
@@ -356,12 +355,12 @@ function cc_increment(base_cc_array=[], additional_cc_array=[], ver='', model=''
 }
 
 /**
- * Special case of diff_deletes that focuses on YoY Chronic Gaps and downgrades.  Maybe does some adjusting for differing coding models yoy, but that sounds hard
+ * Compares a base list of ccs and additional ccs and returns a list of ccs that are deletes or downgrades between the additional codes vs the baseline
  * @customfunction
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
  */
-function cc_gaps(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
+function cc_gap(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
   for (i = 0; i < base_cc_array.length; i++) {
     for (j = 0; j < base_cc_array[i].length; j++) {
       base_cc_array = base_cc_array;
@@ -394,12 +393,12 @@ function cc_gaps(base_cc_array=[], additional_cc_array=[], ver='', model='', age
 }
 
 /**
- * Special case of diff_deletes_raf that focuses on YoY Chronic Gaps and downgrades (net raf of downgraded).  Equivalent of cc_chronic(cc_diff_deletes). Maybe does some adjusting for differing coding models yoy, but that sounds hard
+ * Compares a base list of ccs and additional ccs and returns raf of ccs that are deletes or downgrades between the additional codes vs the baseline
  * @customfunction
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
  */
-function cc_gaps_raf(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
+function cc_gap_raf(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
   for (i = 0; i < base_cc_array.length; i++) {
     for (j = 0; j < base_cc_array[i].length; j++) {
       base_cc_array = base_cc_array;
@@ -434,7 +433,7 @@ function cc_gaps_raf(base_cc_array=[], additional_cc_array=[], ver='', model='',
 }
 
 /**
- * Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: "Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:'
+ * Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: "Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:"
  * @customfunction
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
@@ -472,7 +471,7 @@ function cc_diff(base_cc_array=[], additional_cc_array=[], ver='', age=0, sex=''
 }
 
 /**
- * Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: "Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:'
+ * Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: "Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:"
  * @customfunction
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
@@ -511,13 +510,13 @@ function cc_diff_raf(base_cc_array=[], additional_cc_array=[], ver='', age=0, se
 }
 
 /**
- * dx_diffc
+ * Compares a base list of dx and additional dx and returns an information block on the differences ; eg: "Adds: E119,  I2720; Deletes: I495; Upgraded: F10250; Downgraded:"
  * @customfunction
  * @param {string[][]} base_dx_array accepts array of dx codes
  * @param {string[][]} additional_dx_array accepts array of dxs codes
  *
  */
-function dx_diffc(base_dx_array=[], additional_dx_array=[], ver='', model='', never_trump=0, baserate=0.0) {
+function dx_diff(base_dx_array=[], additional_dx_array=[], ver='', model='', never_trump=0, baserate=0.0) {
   for (i = 0; i < base_dx_array.length; i++) {
     for (j = 0; j < base_dx_array[i].length; j++) {
       base_dx_array = base_dx_array;
@@ -543,19 +542,19 @@ function dx_diffc(base_dx_array=[], additional_dx_array=[], ver='', model='', ne
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var cclist = dx_diff(temp_base_dx_array, temp_additional_dx_array, ver, model, never_trump, baserate);
+  var cclist = dx_diffc(temp_base_dx_array, temp_additional_dx_array, ver, model, never_trump, baserate);
   var result = `adds: ${cclist['adds']}, upgraded: ${cclist['upgraded']}, downgraded: ${cclist['downgraded']}, downgraded_to: ${cclist['downgrade_to']}, deletes: ${cclist['deletes']}`;
   return result;
 }
 
 /**
- * dx_diffc_raf
+ * Returns net raf difference between baseline ccs and additional ccs
  * @customfunction
  * @param {string[][]} base_dx_array accepts array of dx codes
  * @param {string[][]} additional_dx_array accepts array of dxs codes
  *
  */
-function dx_diffc_raf(base_dx_array=[], additional_dx_array=[], ver='', model='', never_trump=0, baserate=0.0) {
+function dx_diff_raf(base_dx_array=[], additional_dx_array=[], ver='', model='', never_trump=0, baserate=0.0) {
   for (i = 0; i < base_dx_array.length; i++) {
     for (j = 0; j < base_dx_array[i].length; j++) {
       base_dx_array = base_dx_array;
@@ -581,7 +580,7 @@ function dx_diffc_raf(base_dx_array=[], additional_dx_array=[], ver='', model=''
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
   never_trump = never_trump || default_never_trump;
-  var cclist = dx_diff(temp_base_dx_array, temp_additional_dx_array, ver, model, never_trump, baserate);
+  var cclist = dx_diffc(temp_base_dx_array, temp_additional_dx_array, ver, model, never_trump, baserate);
   var result = parseFloat(cclist['raf']);
   result = result.toFixed(3);
   return result.toString();
@@ -667,7 +666,7 @@ function dx_increment_raf(base_dx_array=[], additional_dx_array=[], ver='', mode
 }
 
 /**
- * Special case of diff_deletes that focuses on YoY Chronic Gaps and downgrades.
+ * Compares a base list of dxs and additional dxs and returns a list of dxs that are deletes or downgrades between the additional codes vs the baseline
  * @customfunction
  * @param {string[][]} base_dx_array accepts array of dx codes
  * @param {string[][]} additional_dx_array accepts array of dx codes
@@ -704,7 +703,7 @@ function dx_gap(base_dx_array=[], additional_dx_array=[],  ver='', model='', age
 }
 
 /**
- * Special case of diff_deletes_raf that focuses on YoY Chronic Gaps and downgrades (net raf of downgraded).  Equivalent of dx_chronic(dx_diff_deletes). Maybe does some adjusting for differing coding models yoy, but that sounds hard
+ * dx_diff_deletes_raf focuses on YoY Chronic Gaps and downgrades (net raf of downgraded).  Equivalent of dx_chronic(dx_diff_deletes). 
  * @customfunction
  * @param {string[][]} base_dx_array accepts array of dx codes
  * @param {string[][]} additional_dx_array accepts array of dx codes
@@ -1150,7 +1149,7 @@ function get_hcc_dx(hcc_list, dx_list, ver) {
   return mydx;
 }
 
-function dx_diff(old_list=[], new_list=[], ver='', model='', never_trump=0, baserate=0.0) {
+function dx_diffc(old_list=[], new_list=[], ver='', model='', never_trump=0, baserate=0.0) {
   /*
   Utility to compare HCCs and RAF for two lists of dx codes
   */
@@ -2286,6 +2285,6 @@ function v24_interactions(ccs, model, disabl=false, age='') {
 }
 
 // Unit tests module export
-module.exports = {cc_desc, cc_info, cc_combine, cc_gaps, cc_gaps_raf, cc_diff, cc_diff_raf, 
+module.exports = {cc_desc, cc_info, cc_combine, cc_gap, cc_gap_raf, cc_diff, cc_diff_raf, 
     cc_increment, cc_increment_raf,cc_raf,demo_raf,dx_desc,dx2cc,
     dx_raf,clean_dx,clean_cc,dx_increment,dx_increment_raf,dx_gap,dx_gap_raf};
