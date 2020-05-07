@@ -360,7 +360,7 @@ function cc_increment(base_cc_array=[], additional_cc_array=[], ver='', model=''
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
  */
-function cc_gap(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
+function cc_gaps(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
   for (i = 0; i < base_cc_array.length; i++) {
     for (j = 0; j < base_cc_array[i].length; j++) {
       base_cc_array = base_cc_array;
@@ -398,7 +398,7 @@ function cc_gap(base_cc_array=[], additional_cc_array=[], ver='', model='', age=
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
  */
-function cc_gap_raf(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
+function cc_gaps_raf(base_cc_array=[], additional_cc_array=[], ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
   for (i = 0; i < base_cc_array.length; i++) {
     for (j = 0; j < base_cc_array[i].length; j++) {
       base_cc_array = base_cc_array;
@@ -471,7 +471,7 @@ function cc_diff(base_cc_array=[], additional_cc_array=[], ver='', age=0, sex=''
 }
 
 /**
- * Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: "Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:"
+ * Returns net raf difference between baseline ccs and additional ccs
  * @customfunction
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
@@ -672,7 +672,7 @@ function dx_increment_raf(base_dx_array=[], additional_dx_array=[], ver='', mode
  * @param {string[][]} additional_dx_array accepts array of dx codes
  *
  */
-function dx_gap(base_dx_array=[], additional_dx_array=[],  ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
+function dx_gaps(base_dx_array=[], additional_dx_array=[],  ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
   for (i = 0; i < base_dx_array.length; i++) {
     for (j = 0; j < base_dx_array[i].length; j++) {
       base_dx_array = base_dx_array;
@@ -697,7 +697,7 @@ function dx_gap(base_dx_array=[], additional_dx_array=[],  ver='', model='', age
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver=ver, model=model, age=age, disabl=disabl, baserate=baserate);
+  var dx_dict = dx_gap(temp_base_dx_array, temp_additional_dx_array, ver=ver, model=model, age=age, disabl=disabl, baserate=baserate);
   var result = dx_dict['Deletes'].concat(dx_dict['Downgraded']);
   return result.toString();
 }
@@ -709,7 +709,7 @@ function dx_gap(base_dx_array=[], additional_dx_array=[],  ver='', model='', age
  * @param {string[][]} additional_dx_array accepts array of dx codes
  *
  */
-function dx_gap_raf(base_dx_array=[], additional_dx_array=[],  ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
+function dx_gaps_raf(base_dx_array=[], additional_dx_array=[],  ver='', model='', age=0, sex='', disabl=false, baserate=0.0) {
   for (i = 0; i < base_dx_array.length; i++) {
     for (j = 0; j < base_dx_array[i].length; j++) {
       base_dx_array = base_dx_array;
@@ -734,7 +734,7 @@ function dx_gap_raf(base_dx_array=[], additional_dx_array=[],  ver='', model='',
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver=ver, model=model, age=age, disabl=disabl, baserate=baserate);
+  var dx_dict = dx_gap(temp_base_dx_array, temp_additional_dx_array, ver=ver, model=model, age=age, disabl=disabl, baserate=baserate);
   var result = dx_dict['raf'];
   var result = parseFloat(result);
   result = result.toFixed(3);
@@ -761,7 +761,7 @@ function hcc_gaps(old_list=[], new_list=[], ver='', model='', age=0, disabl=fals
   return gaps;
 }
 
-function dx_gaps(old_list=[], new_list=[], ver='', model='', age=0, disabl=false, baserate=0.0) {
+function dx_gap(old_list=[], new_list=[], ver='', model='', age=0, disabl=false, baserate=0.0) {
   /*
   Utility to identify hccs that were dropped or downgraded from one list to the next
   */
@@ -2285,6 +2285,6 @@ function v24_interactions(ccs, model, disabl=false, age='') {
 }
 
 // Unit tests module export
-module.exports = {cc_desc, cc_info, cc_combine, cc_gap, cc_gap_raf, cc_diff, cc_diff_raf, 
+module.exports = {cc_desc, cc_info, cc_combine, cc_gaps, cc_gaps_raf, cc_diff, cc_diff_raf, 
     cc_increment, cc_increment_raf,cc_raf,demo_raf,dx_desc,dx2cc,
-    dx_raf,clean_dx,clean_cc,dx_increment,dx_increment_raf,dx_gap,dx_gap_raf};
+    dx_raf,clean_dx,clean_cc,dx_increment,dx_increment_raf,dx_gaps,dx_gaps_raf};

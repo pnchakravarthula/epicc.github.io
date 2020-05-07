@@ -1,6 +1,6 @@
 const {demo_raf, dx_desc, dx2cc, dx_raf, clean_dx, clean_cc, dx_increment, 
-    dx_increment_raf, dx_gap, dx_gap_raf, cc_desc, cc_info, cc_raf, cc_combine, 
-    cc_gap, cc_gap_raf, cc_diff, cc_diff_raf, cc_increment, cc_increment_raf}  = require('./functions');
+    dx_increment_raf, dx_gaps, dx_gaps_raf, cc_desc, cc_info, cc_raf, cc_combine, 
+    cc_gaps, cc_gaps_raf, cc_diff, cc_diff_raf, cc_increment, cc_increment_raf}  = require('./functions');
 
 beforeEach(() => {
 // window.location.reload();
@@ -105,24 +105,24 @@ test('dx_increment_raf: input: "E119,F1110","E1111,E1042,F1020","v23","CPD" outp
 expect(dx_increment_raf("E119,F1110,K7111,D599,I213","E1111,F1020,K744,D599,C770")).not.toBe('0.254');
 });
 
-// dx_gap Pass Test Cases
-test('dx_gap: input: "E119,I281","E1111,E1042,F1020" output: "I281"', () => {
-expect(dx_gap("E119,I281","E1111,E1042,F1020")).toBe('I281');
+// dx_gaps Pass Test Cases
+test('dx_gaps: input: "E119,I281","E1111,E1042,F1020" output: "I281"', () => {
+expect(dx_gaps("E119,I281","E1111,E1042,F1020")).toBe('I281');
 });
 
-// dx_gap Fail Test Cases
-test('dx_gap: input: "E1042,F10250,D708,I281","E119,F1020" output: "D708,I281,F10250,E1042"', () => {
-expect(dx_gap("E1042,F10250,D708,I281","E119,F1020")).not.toBe('D708,I281,F10250,E1042');
+// dx_gaps Fail Test Cases
+test('dx_gaps: input: "E1042,F10250,D708,I281","E119,F1020" output: "D708,I281,F10250,E1042"', () => {
+expect(dx_gaps("E1042,F10250,D708,I281","E119,F1020")).not.toBe('D708,I281,F10250,E1042');
 });
 
-// dx_gap_raf Pass Test Cases
-test('dx_gap_raf: input: "E119,I281","E1111,E1042,F1020","v23","CPD" output: "-0.376"', () => {
-expect(dx_gap_raf("E119,I281","E1111,E1042,F1020","v23","CPD")).toBe('-0.376');
+// dx_gaps_raf Pass Test Cases
+test('dx_gaps_raf: input: "E119,I281","E1111,E1042,F1020","v23","CPD" output: "-0.376"', () => {
+expect(dx_gaps_raf("E119,I281","E1111,E1042,F1020","v23","CPD")).toBe('-0.376');
 });
 
-// dx_gap_raf Fail Test Cases
-test('dx_gap_raf: input: "T8602","C770","v23","CFA" output: "-0.855"', () => {
-expect(dx_gap_raf("T8602","C770","v23","CFA")).not.toBe('-0.55');
+// dx_gaps_raf Fail Test Cases
+test('dx_gaps_raf: input: "T8602","C770","v23","CFA" output: "-0.855"', () => {
+expect(dx_gaps_raf("T8602","C770","v23","CFA")).not.toBe('-0.55');
 });
 
 // cc_desc 
@@ -169,26 +169,26 @@ test('Test for CC_COMBINE (CASE 3) {negative} ', () => {
 expect(cc_combine("HCC17,HCC18,HCC8,HCC10","v23")).not.toBe("HCC17,HCC18");
 });
 
-// cc gap_RAF
-test('Test for CC_GAP_RAF (CASE 1) ', () => {
-expect(cc_gap_raf("HCC19,HCC85","HCC17,HCC18,HCC55","v23","CFD")).toBe("-0.441");
+// cc gaps_RAF
+test('Test for CC_GAPS_RAF (CASE 1) ', () => {
+expect(cc_gaps_raf("HCC19,HCC85","HCC17,HCC18,HCC55","v23","CFD")).toBe("-0.441");
 });
-test('Test for CC_GAP_RAF (CASE 2) ', () => {
-expect(cc_gap_raf("HCC47,HCC8","HCC12")).toBe("-3.184");
+test('Test for CC_GAPS_RAF (CASE 2) ', () => {
+expect(cc_gaps_raf("HCC47,HCC8","HCC12")).toBe("-3.184");
 });
-test('Test for CC_GAP_RAF (CASE 2) ', () => {
-expect(cc_gap_raf("HCC47,HCC8","HCC12,HCC18")).not.toBe("-1.184");
+test('Test for CC_GAPS_RAF (CASE 2) ', () => {
+expect(cc_gaps_raf("HCC47,HCC8","HCC12,HCC18")).not.toBe("-1.184");
 });
 
-// CC_GAP
-test('Test for CC_GAP (CASE 1) ', () => {
-expect(cc_gap("HCC19,HCC85","HCC17,HCC18,HCC55","v23")).toBe("HCC85,HCC85_gDiabetesMellit");
+// CC_GAPS
+test('Test for CC_GAPS (CASE 1) ', () => {
+expect(cc_gaps("HCC19,HCC85","HCC17,HCC18,HCC55","v23")).toBe("HCC85,HCC85_gDiabetesMellit");
 });
-test('Test for CC_GAP (CASE 2) ', () => {
-expect(cc_gap("HCC19,HCC56","HCC85,HCC55")).toBe("HCC19");
+test('Test for CC_GAPS (CASE 2) ', () => {
+expect(cc_gaps("HCC19,HCC56","HCC85,HCC55")).toBe("HCC19");
 });
-test('Test for CC_GAP (CASE 3) ', () => {
-expect(cc_gap("HCC18,HCC19","HCC85,HCC55")).not.toBe("HCC1");
+test('Test for CC_GAPS (CASE 3) ', () => {
+expect(cc_gaps("HCC18,HCC19","HCC85,HCC55")).not.toBe("HCC1");
 });
 
 //cc_diff 
