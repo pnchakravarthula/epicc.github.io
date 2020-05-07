@@ -619,7 +619,7 @@ function cc_increment() {
  */
 
 
-function cc_gap() {
+function cc_gaps() {
   var base_cc_array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var additional_cc_array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var ver = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
@@ -670,7 +670,7 @@ function cc_gap() {
  */
 
 
-function cc_gap_raf() {
+function cc_gaps_raf() {
   var base_cc_array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var additional_cc_array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var ver = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
@@ -770,7 +770,7 @@ function cc_diff() {
   return result;
 }
 /**
- * Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: "Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:"
+ * Returns net raf difference between baseline ccs and additional ccs
  * @customfunction
  * @param {string[][]} base_cc_array accepts array of cc codes
  * @param {string[][]} additional_cc_array accepts array of cc codes
@@ -1047,7 +1047,7 @@ function dx_increment_raf() {
  */
 
 
-function dx_gap() {
+function dx_gaps() {
   var base_dx_array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var additional_dx_array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var ver = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
@@ -1086,7 +1086,7 @@ function dx_gap() {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
+  var dx_dict = dx_gap(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
   var result = dx_dict['Deletes'].concat(dx_dict['Downgraded']);
   return result.toString();
 }
@@ -1099,7 +1099,7 @@ function dx_gap() {
  */
 
 
-function dx_gap_raf() {
+function dx_gaps_raf() {
   var base_dx_array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var additional_dx_array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var ver = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
@@ -1138,7 +1138,7 @@ function dx_gap_raf() {
   ver === null || ver === '' || ver === 0 ? ver = default_ver : ver = ver.toLowerCase();
   model === null || model === '' || model === 0 ? model = default_model : convertToUppperCase(model);
   baserate = baserate || default_baserate;
-  var dx_dict = dx_gaps(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
+  var dx_dict = dx_gap(temp_base_dx_array, temp_additional_dx_array, ver = ver, model = model, age = age, disabl = disabl, baserate = baserate);
   var result = dx_dict['raf'];
   var result = parseFloat(result);
   result = result.toFixed(3);
@@ -1176,7 +1176,7 @@ function hcc_gaps() {
   return gaps;
 }
 
-function dx_gaps() {
+function dx_gap() {
   var old_list = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var new_list = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   var ver = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
@@ -3442,8 +3442,8 @@ module.exports = {
   cc_desc: cc_desc,
   cc_info: cc_info,
   cc_combine: cc_combine,
-  cc_gap: cc_gap,
-  cc_gap_raf: cc_gap_raf,
+  cc_gaps: cc_gaps,
+  cc_gaps_raf: cc_gaps_raf,
   cc_diff: cc_diff,
   cc_diff_raf: cc_diff_raf,
   cc_increment: cc_increment,
@@ -3457,8 +3457,8 @@ module.exports = {
   clean_cc: clean_cc,
   dx_increment: dx_increment,
   dx_increment_raf: dx_increment_raf,
-  dx_gap: dx_gap,
-  dx_gap_raf: dx_gap_raf
+  dx_gaps: dx_gaps,
+  dx_gaps_raf: dx_gaps_raf
 };
 CustomFunctions.associate("DEMO_RAF", demo_raf);
 CustomFunctions.associate("DX_DESC", dx_desc);
@@ -3472,16 +3472,16 @@ CustomFunctions.associate("CC_RAF", cc_raf);
 CustomFunctions.associate("CC_COMBINE", cc_combine);
 CustomFunctions.associate("CC_INCREMENT_RAF", cc_increment_raf);
 CustomFunctions.associate("CC_INCREMENT", cc_increment);
-CustomFunctions.associate("CC_GAP", cc_gap);
-CustomFunctions.associate("CC_GAP_RAF", cc_gap_raf);
+CustomFunctions.associate("CC_GAPS", cc_gaps);
+CustomFunctions.associate("CC_GAPS_RAF", cc_gaps_raf);
 CustomFunctions.associate("CC_DIFF", cc_diff);
 CustomFunctions.associate("CC_DIFF_RAF", cc_diff_raf);
 CustomFunctions.associate("DX_DIFF", dx_diff);
 CustomFunctions.associate("DX_DIFF_RAF", dx_diff_raf);
 CustomFunctions.associate("DX_INCREMENT", dx_increment);
 CustomFunctions.associate("DX_INCREMENT_RAF", dx_increment_raf);
-CustomFunctions.associate("DX_GAP", dx_gap);
-CustomFunctions.associate("DX_GAP_RAF", dx_gap_raf);
+CustomFunctions.associate("DX_GAPS", dx_gaps);
+CustomFunctions.associate("DX_GAPS_RAF", dx_gaps_raf);
 
 /***/ }),
 

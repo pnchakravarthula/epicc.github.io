@@ -486,8 +486,8 @@
         },
         {
             "description": "Compares a base list of ccs and additional ccs and returns a list of ccs that are deletes or downgrades between the additional codes vs the baseline",
-            "id": "CC_GAP",
-            "name": "CC_GAP",
+            "id": "CC_GAPS",
+            "name": "CC_GAPS",
             "parameters": [
                 {
                     "description": "accepts array of cc codes",
@@ -538,8 +538,8 @@
         },
         {
             "description": "Compares a base list of ccs and additional ccs and returns raf of ccs that are deletes or downgrades between the additional codes vs the baseline",
-            "id": "CC_GAP_RAF",
-            "name": "CC_GAP_RAF",
+            "id": "CC_GAPS_RAF",
+            "name": "CC_GAPS_RAF",
             "parameters": [
                 {
                     "description": "accepts array of cc codes",
@@ -646,7 +646,7 @@
             "result": {}
         },
         {
-            "description": "Compares a base list of ccs and additional ccs and returns an information block on the differences ; eg: \"Adds: HCC001, HCC18; Deletes: HCC135; Upgraded: HCC019; Downgraded:\"",
+            "description": "Returns net raf difference between baseline ccs and additional ccs",
             "id": "CC_DIFF_RAF",
             "name": "CC_DIFF_RAF",
             "parameters": [
@@ -892,8 +892,8 @@
         },
         {
             "description": "Compares a base list of dxs and additional dxs and returns a list of dxs that are deletes or downgrades between the additional codes vs the baseline",
-            "id": "DX_GAP",
-            "name": "DX_GAP",
+            "id": "DX_GAPS",
+            "name": "DX_GAPS",
             "parameters": [
                 {
                     "description": "accepts array of dx codes",
@@ -944,8 +944,8 @@
         },
         {
             "description": "dx_diff_deletes_raf focuses on YoY Chronic Gaps and downgrades (net raf of downgraded).  Equivalent of dx_chronic(dx_diff_deletes).",
-            "id": "DX_GAP_RAF",
-            "name": "DX_GAP_RAF",
+            "id": "DX_GAPS_RAF",
+            "name": "DX_GAPS_RAF",
             "parameters": [
                 {
                     "description": "accepts array of dx codes",
