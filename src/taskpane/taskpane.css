@@ -78,3 +78,13 @@
 b {
     font-weight: bold;
 }
+.responsive {
+    width: 100%;
+    height: auto;
+  }
+  body {
+      background-color: #fafafa;
+  }
+  .heading {
+      background-color: white;
+  }
