@@ -3,50 +3,38 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>epiCC Task Pane Add-in</title>
-
+    <title>epiAnalyst Lite for Excel</title>
     <!-- Office JavaScript API -->
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
-
     <!-- For more information on Office UI Fabric, visit https://developer.microsoft.com/fabric. -->
     <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css"/>
-
     <!-- Template styles -->
     <link href="taskpane.css" rel="stylesheet" type="text/css" />
-
     <!--for glyphicon  -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #fafafa;
-        }
-    </style>
 </head>
-
 <body class="ms-font-m ms-welcome ms-Fabric">
-    <div class="heading"><br/>
-    <img class="responsive" src="9401a0ea5028011d2a378e6b30e9700b.png" alt="epi" title="epiAnalyst" />
-    <h2 class="ms-font-m" style="text-align:right;"><strong>epiAnalyst Lite for Excel&nbsp;</strong></h2>
-    <p class="ms-font-s" style="text-align:right;">Risk Adjustment Analytics Toolkit by <a href="https://www.episource.com/"><strong>Episource&nbsp;</strong></a></p>   
+    <div class="container"><br/>
+        <img class="responsive" src="9401a0ea5028011d2a378e6b30e9700b.png" alt="epi" title="epiAnalyst" />
+        <h2 class="ms-font-m" style="text-align:right;"><strong>epiAnalyst Lite for Excel</strong></h2>
+        <p class="ms-font-s" style="text-align:right;">Risk Adjustment Analytics Toolkit by <a href="https://www.episource.com/"><strong>Episource</strong></a></p>
+        <div>
+            <h3 class="ms-font-m"><strong><a href="https://hccreference.com/">DX/HCC Reference Tools <span class="glyphicon glyphicon-new-window"></span></a></strong></h3>
+            <h3 class="ms-font-m"><strong>Getting Started: Basic Analysis </strong></h3>
+            <p class="ms-font-s">Analytics functions are callable from cells as Excel functions</p>
+            <p class="ms-font-s">&nbsp; =epi.dx_desc("e119")</p>
+            <p class="ms-font-s">&nbsp; =epi.dx2cc("E119, i420")</p>
+            <p class="ms-font-s">&nbsp; =epi.dx_raf("E1100", "v24")</p>
+            <p class="ms-font-s">&nbsp; =epi.dx_increment("N18.3", "N18.4")</p>
+            <p class="ms-font-s">&nbsp; =epi.dx_gaps("e1100", "e119")</p>
+            <p class="ms-font-s">&nbsp; =epi.cc_raf(“HCC58”)</p>
+            <p class="ms-font-s">&nbsp; =epi.cc_increment(“19”, “18”)</p>
+            <h3 class="ms-font-m"><strong><a href="https://hccexplorer.com/support">Full list of functions and more examples <span class="glyphicon glyphicon-new-window"></span></a></strong></h3>
+        </div>
     </div>
-    <main>
-        <h3 class="ms-font-m"><strong><a href="https://hccreference.com/">DX/HCC Reference Tools <span class="glyphicon glyphicon-new-window"></span></a></strong></h3>
-        <h3 class="ms-font-m"><strong>Getting Started: Basic Analysis </strong></h3>
-        <p class="ms-font-s">Analytics functions are callable from cells as Excel functions</p>
-        <p class="ms-font-s">&nbsp; =epi.dx_desc("e119")</p>
-        <p class="ms-font-s">&nbsp; =epi.dx2cc("E119, i420")</p>
-        <p class="ms-font-s">&nbsp; =epi.dx_raf("E1100", "v24")</p>
-        <p class="ms-font-s">&nbsp; =epi.dx_increment("N18.3", "N18.4")</p>
-        <p class="ms-font-s">&nbsp; =epi.dx_gaps("e1100", "e119")</p>
-        <p class="ms-font-s">&nbsp; =epi.cc_raf(“HCC58”)</p>
-        <p class="ms-font-s">&nbsp; =epi.cc_increment(“19”, “18”)</p>
-        <h3 class="ms-font-m"><strong><a href="https://hccexplorer.com/support">Full list of functions and more examples <span class="glyphicon glyphicon-new-window"></span></a></strong></h3>
-    </main>
 <script type="text/javascript" src="polyfill.js"></script><script type="text/javascript" src="taskpane.js"></script></body>
-
 </html>
