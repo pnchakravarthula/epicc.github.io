@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "10"
+
+branches:
+  only:
+  - develop
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install 
+before_script: 
+  sudo chmod 0777 ./node_modules/.bin/jest
+script:
+  - npm test
+  - npm run build
+deploy:
+  provider: pages
+  skip_cleanup: true   
+  keep_history: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/
